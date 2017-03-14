@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Beyond Plus CMS (2.1.0 Beta)
 Beyond Plus CMS is the modular based Content Management System. It support to create websites and web application quickly. 
 
@@ -75,3 +76,7 @@ The Beyond Plus CMS is open-sourced software licensed under the [MIT license](ht
 
 * CB Bank Account No  : 0010600500612014
 * KBZ Bank Account No : 99930799902832301
+=======
+# cms
+Beyond Plus CMS
+>>>>>>> 9dad57d3e6c44ac423902994677c2cb70e221672
