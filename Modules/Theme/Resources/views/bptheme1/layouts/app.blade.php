@@ -8,10 +8,7 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset("/public/assets/bptheme1/css/app.css") }}">
     <link rel="stylesheet" type="text/css" href="{{ asset("/public/assets/bptheme1/css/main.css") }}">
-
-    <script type="text/javascript" src="https://unpkg.com/marked@0.3.6"></script>
     
-
 </head>
 <body>
 
