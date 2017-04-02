@@ -159,7 +159,7 @@ export default {
                       category_name_mm: "",
                       parent_id: 0,
                       category_link: "",
-                      category_icon: "",
+                      category_icon: "fa fa-list",
                       category_marker: "",
                       category_desc: "",
                       count_view: 0,

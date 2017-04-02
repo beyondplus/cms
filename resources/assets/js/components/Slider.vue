@@ -5,6 +5,9 @@
       <div class="x_panel">
         <div class="x_title">
           <h2>Slider <small>form tool</small></h2>
+          <div class="alert alert-danger" v-if="message">
+            <strong>Danger!</strong> Please check the required field
+          </div>
           <ul class="nav navbar-right panel_toolbox">
             <li><a class="collapse-link" href="javascript:void(0)" v-on:click="newSlider"><i class="fa fa-plus"></i></a>
             </li>
@@ -52,7 +55,7 @@
               <label class="control-label col-md-3 col-sm-3 col-xs-12" >Description <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <textarea type="text" id="slider_desc" required="required" class="form-control col-md-7 col-xs-12 text-left" v-model="slider.slider_desc">
+                <textarea type="text" id="slider_desc" required="required" class="form-control col-md-7 col-xs-12 text-left" v-model="slider.slider_description">
                 </textarea>
               </div>
             </div>
@@ -203,7 +206,8 @@ export default {
           image: '',
           imgModal : '',
           modal : -1,
-          slider_url: this.assets
+          slider_url: this.assets,
+          message: false
         }
     },
     methods: {
@@ -276,14 +280,14 @@ export default {
             this.$http.post(this.url+ this.segUrl, slider).then((response) => {
                 this.fetchslider()
             }, (response) => {
-                // error callback
+                this.message = true
             });
           } else {
             this.segUrl = '/slider/'+id 
             this.$http.patch(this.url+ this.segUrl, slider).then((response) => {
                 this.fetchslider()
             }, (response) => {
-                // error callback
+                this.message = true
             }); 
           }    
           $("#slider_name").focus();

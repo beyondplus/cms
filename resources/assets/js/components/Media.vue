@@ -302,14 +302,14 @@ export default {
             this.$http.post(this.url+ this.segUrl, media).then((response) => {
                 this.fetchMedia()
             }, (response) => {
-                // error callback
+                this.message = "Please check the required field"
             });
           } else {
             this.segUrl = '/media/'+id 
             this.$http.patch(this.url+ this.segUrl, media).then((response) => {
                 this.fetchMedia()
             }, (response) => {
-                // error callback
+                this.message = "Please check the required field"
             }); 
           }    
           $("#media_name").focus();

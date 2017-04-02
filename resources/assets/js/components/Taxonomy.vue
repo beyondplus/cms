@@ -159,7 +159,7 @@ export default {
                       tax_name_mm: "",
                       parent_id: 0,
                       tax_link: "",
-                      tax_icon: "",
+                      tax_icon: "fa fa-list",
                       tax_marker: "",
                       tax_desc: "",
                       count_view: 0,
