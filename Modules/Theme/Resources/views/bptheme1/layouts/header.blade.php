@@ -3,12 +3,12 @@
     <!-- nav box -->
         <div class="col-md-12 nav_box">
             <div class="col-md-1"></div>
-            <div class="col-md-10 navs ">
+            <div class="col-md-9 navs ">
                 <div class="col-md-12">
                   <br>
                   
                 <ul class="nav nav-pills">
-                   <li><a id="menu_home" href="{{url('/') }}">HOME</a></li>
+                   <li><a id="menu_home" href="{{url('/') }}">@lang('theme::general.home')</a></li>
                    @foreach (bp_menu() as $menu)
                        @if(sizeof($menu->children)>0) 
                              <li class = "dropdown">
@@ -43,8 +43,8 @@
                 </ul>
                 </div>
             </div>
-            <div class="col-md-1">
-                             
+            <div class="col-md-2">
+                <?php echo lang_dropdown(url('/')) ?>  
             </div>
         </div>
         <!-- nav box end -->

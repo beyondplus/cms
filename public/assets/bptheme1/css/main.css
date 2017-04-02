@@ -475,3 +475,54 @@ Main Components
 }
 
  
+.nav>li>a:hover,.nav>li>a:focus{
+  text-decoration:none;
+  
+  border:1px solid white;
+}
+.nav>li>a {
+  border:1px solid transparent;
+}
+
+.lang { position: relative;display: inline-block;  }
+.dropdown-anchor { color:#000 !important; }
+.lang-box { display: none; position: absolute;width: 100%; }
+.lang:hover .lang-box { display: block; z-index: 1;}
+.lang-box ul li {
+  background: #fff;
+  text-align: left;
+  color: #000;
+  padding: 9px ;
+    border-color: #f1e0e0;
+    border-style: solid;
+    border-width: 0px 1px 1px 1px;}
+.lang-box ul li img {padding-right: 10px;}
+.lang-box ul li a { 
+  font-size: 11px;
+  text-transform: capitalize;
+ }
+
+.lang-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.lang-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    height: 200px;
+    min-width: 250px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    overflow-x: auto;
+    padding-bottom:16px;
+    font-size: 11px;
+    z-index: 1;
+}
+.lang-dropdown-content li {
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.lang-dropdown:hover .lang-dropdown-content {
+    display: block;
+}

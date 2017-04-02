@@ -16,8 +16,8 @@
 				</ul>
 				<p>* Trust our service</p>
 				<div class="button fadeInUp delayp2">
-					<a href="http://www.beyondplus.net/service" class="btn btn-primary"><i class="fa fa-desktop"></i> Our Service </a>
-					<a href="http://www.beyondplus.net/about-us" class="btn btn-success"><i class="fa fa-desktop"></i> About Us </a>
+					<a href="http://www.beyondplus.biz/service" class="btn btn-primary"><i class="fa fa-desktop"></i> Our Service </a>
+					<a href="http://www.beyondplus.biz/about-us" class="btn btn-success"><i class="fa fa-desktop"></i> About Us </a>
 				</div>
 			</div>
 		</div>

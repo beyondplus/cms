@@ -15,13 +15,21 @@
 //     return view('welcome');
 // });
 
-Route::get('/home', function() {
-	echo "dsaf";
+// Route::get('/home', function() {
+// 	echo "dsaf";
+// });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::get('lang/{locale}', function ($locale) {
+	if($locale == "mm"){
+		Session::put('applocale', 'mm');
+		App::setLocale($locale);
+	} else {
+		Session::put('applocale', 'en');
+		App::setLocale("en");
+	}    
+	$locale = App::getLocale();
+	return redirect()->back();
 });
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
