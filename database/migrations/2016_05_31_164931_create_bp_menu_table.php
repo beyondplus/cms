@@ -22,6 +22,7 @@ class CreateBpMenuTable extends Migration
             $table->integer('parent_id')->default(1);
             $table->string('menu_type')->default('default');
             $table->integer('staff_id')->default(0);
+            $table->string('lang',3)->default('en');
             $table->timestamps();
         });
     }

@@ -24,6 +24,7 @@ class CreateBpPostTable extends Migration
             $table->integer('post_weight')->default(0);
             $table->integer('post_view')->default(0);
             $table->string('post_active',3)->default('yes');
+            $table->string('lang',3)->default('en');
             $table->integer('staff_id')->default(0);
             $table->timestamps();
         });
