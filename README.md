@@ -1,4 +1,4 @@
-# Beyond Plus CMS (2.2.0 Beta)
+# Beyond Plus CMS (2.2.5 Beta)
 
 Beyond Plus CMS is the modular based Content Management System. It support to create websites and web application quickly. 
 
@@ -42,6 +42,15 @@ Beyond Plus CMS is the modular based Content Management System. It support to cr
 ## Dashboard
 * npm run watch
 
+## Global Models
+* use bp_post
+* use bp_category
+* use bp_menu
+* use bp_relationship
+* use bp_slider
+* use bp_module
+* use bp_custom
+
 ## We used Technology
 * Laravel 5.4 Framework
 * Vue JS 2
@@ -71,9 +80,9 @@ The Beyond Plus CMS is open-sourced software licensed under the [MIT license](ht
 
 [www.beyondplus.biz](http://www.beyondplus.biz)
 
-## Youtube Video
+## Youtube Video Tutorial
 
-[https://www.youtube.com/watch?v=WV9rfMdqmh0](https://www.youtube.com/watch?v=WV9rfMdqmh0)
+[https://youtu.be/aaFk7pHwBlk](https://youtu.be/aaFk7pHwBlk)
 
 ## Donate the Beer
 
