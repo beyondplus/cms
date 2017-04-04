@@ -56,10 +56,10 @@ Beyond Plus CMS is the modular based Content Management System. It support to cr
 * font-awesome
 
 ## Frontend Screenshot
-![alt text](https://github.com/BeyondPlusTrainingCentre/cms/raw/master/frontend.png "Front Screenshot")
+![alt text](https://github.com/beyondplus/cms/raw/master/frontend.png "Front Screenshot")
 
 ## Backend Screenshot
-![alt text](https://github.com/BeyondPlusTrainingCentre/cms/raw/master/backend.png "Backend Screenshot")
+![alt text](https://github.com/beyondplus/cms/raw/master/backend.png "Backend Screenshot")
 
 ## Issues
 [https://github.com/beyondplus/cms/issues](https://github.com/beyondplus/cms/issues)
@@ -74,7 +74,7 @@ The Beyond Plus CMS is open-sourced software licensed under the [MIT license](ht
 
 ## Our Website
 
-[www.beyondplus.net](http://www.beyondplus.net)
+[www.beyondplus.biz](http://www.beyondplus.biz)
 
 ## Youtube Video
 
