@@ -1,4 +1,4 @@
-# Beyond Plus CMS (2.2.1 Beta)
+# Beyond Plus CMS (2.2.5 Beta)
 Beyond Plus CMS is the modular based Content Management System. It support to create websites and web application quickly. 
 
 ## Requirement
@@ -14,11 +14,17 @@ Beyond Plus CMS is the modular based Content Management System. It support to cr
 
 * composer create-project --prefer-dist beyondplus/cms projectname
 * create database and configuration in .env (or) vi .env
+* php artisan migrate:refresh --seed
+* npm install
+
+## Cache Clear and Version Update
 * composer update
 * composer dump-autoload
 * php artisan optimize
-* php artisan migrate:refresh --seed
-* npm install
+
+## Permission in (Linux , Mac)
+* bootstrap
+* storage
 
 ## Usage
 * siteurl.com/bp-admin/login
