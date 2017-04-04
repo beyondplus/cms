@@ -8,7 +8,7 @@
     "license": "MIT",
     "type": "project",
     "version": "2.2.0",
-    "minimum-stability": "dev",
+    "minimum-stability": "master",
     "require": {
         "php": ">=5.6.4",
         "beyondplus/cmslibrary": "2.2.*"
@@ -55,5 +55,8 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true
-    }
+    },
+    "repositories": {
+        "packagist": { "url": "https://packagist.org", "type": "composer" }
+     }
 }
