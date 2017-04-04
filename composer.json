@@ -7,7 +7,7 @@
     ],
     "license": "MIT",
     "type": "project",
-    "version": "2.2.2",
+    "version": "2.2.3",
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.6.4",
