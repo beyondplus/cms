@@ -91,7 +91,7 @@ The Beyond Plus CMS is open-sourced software licensed under the [MIT license](ht
 * CB Bank Account No  : 0010600500612014
 * KBZ Bank Account No : 99930799902832301
 
-## Paypal
+## Donate with Paypal
 
-[Paypal](PayPal.Me/kothu/1)
+[Paypal Account](http://PayPal.Me/kothu/1)
 
