@@ -215,7 +215,6 @@
             </li>
             <li><a class="close-link" v-on:click="closeMenu"><i class="fa fa-close"></i></a>
             </li>
-            <li>
           </ul>
           <div class="clearfix"></div>
         </div>

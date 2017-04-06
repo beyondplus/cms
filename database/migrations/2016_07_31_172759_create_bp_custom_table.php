@@ -20,7 +20,7 @@ class CreateBpCustomTable extends Migration
             $table->integer('custom_weight')->default(1);
             $table->string('custom_icon');
             $table->integer('parent_id')->default(0);
-            $table->integer('staff_id')->default(0);;
+            $table->integer('staff_id')->default(1);;
             $table->timestamps();
         });
     }

@@ -100,7 +100,6 @@
             </li>
             <li><a class="close-link"><i class="fa fa-close"></i></a>
             </li>
-            <li>
           </ul>
           <div class="clearfix"></div>
         </div>
@@ -152,8 +151,8 @@ export default {
           searchQuery: '',
           allTaxonomy: [{tax_name:'', tax_id:''}],
           taxonomies: [ { tax_id: 1,tax_name: "",tax_name_mm: "",parent_id: 0,tax_link: "",tax_icon: "",tax_marker: "",
-            tax_desc: "",count_view: 0,tax_lan: "en",tax_dash: 0,
-            tax_active: "yes",tax_created: 0,created_at: ""}],
+            tax_desc: "",count_view: 0,tax_lan: 1,tax_type: "tax",
+            tax_active: "yes",created_at: ""}],
           taxonomy: { tax_id: 1,
                       tax_name: "",
                       tax_name_mm: "",
@@ -161,17 +160,17 @@ export default {
                       tax_link: "",
                       tax_icon: "fa fa-list",
                       tax_marker: "",
-                      tax_desc: "",
+                      tax_desc: " ",
                       count_view: 0,
                       tax_lan: "en",
-                      tax_dash: 0,
+                      tax_type: "tax",
                       tax_active: "yes",
-                      tax_created: 0,
+                      tax_lan: 1,
                       created_at: ""
                       },
           f5Taxonomy : {tax_id: 1,tax_name: "",tax_name_mm: "",parent_id: 0,tax_link: "",tax_icon: "",tax_marker: "",
-            tax_desc: "",count_view: 0,tax_lan: "en",tax_dash: 0,
-            tax_active: "yes",tax_created: 0,created_at: "" },
+            tax_desc: "",count_view: 0,tax_lan: "en",tax_type: "tax",
+            tax_active: "yes",tax_lan: 1,created_at: "" },
           perPage : 10,
           submit:true,
           edit: false,

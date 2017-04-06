@@ -15958,7 +15958,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -16134,7 +16133,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -16283,31 +16283,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['page', 'url'],
     data: function data() {
+        var _taxonomy, _f5Taxonomy;
+
         return {
             segUrl: '',
             searchQuery: '',
-            allCategory: [{ category_name: '', category_id: '' }],
-            categories: [{ category_id: 1, category_name: "", category_name_mm: "", parent_id: 0, category_link: "", category_icon: "", category_marker: "",
-                category_desc: "", count_view: 0, category_lan: "en", category_dash: 0,
-                category_active: "yes", category_created: 0, created_at: "" }],
-            category: { category_id: 1,
-                category_name: "",
-                category_name_mm: "",
+            allTaxonomy: [{ tax_name: '', tax_id: '' }],
+            taxonomies: [{ tax_id: 1, tax_name: "", tax_name_mm: "", parent_id: 0, tax_link: "", tax_icon: "", tax_marker: "",
+                tax_desc: "", count_view: 0, tax_lan: 1, tax_type: "tax",
+                tax_active: "yes", created_at: "" }],
+            taxonomy: (_taxonomy = { tax_id: 1,
+                tax_name: "",
+                tax_name_mm: "",
                 parent_id: 0,
-                category_link: "",
-                category_icon: "fa fa-list",
-                category_marker: "",
-                category_desc: "",
+                tax_link: "",
+                tax_icon: "fa fa-list",
+                tax_marker: "",
+                tax_desc: " ",
                 count_view: 0,
-                category_lan: "en",
-                category_dash: 0,
-                category_active: "yes",
-                category_created: 0,
-                created_at: ""
-            },
-            f5Category: { category_id: 1, category_name: "", category_name_mm: "", parent_id: 0, category_link: "", category_icon: "", category_marker: "",
-                category_desc: "", count_view: 0, category_lan: "en", category_dash: 0,
-                category_active: "yes", category_created: 0, created_at: "" },
+                tax_lan: "en",
+                tax_type: "tax",
+                tax_active: "yes"
+            }, _defineProperty(_taxonomy, 'tax_lan', 1), _defineProperty(_taxonomy, 'created_at', ""), _taxonomy),
+            f5Taxonomy: (_f5Taxonomy = { tax_id: 1, tax_name: "", tax_name_mm: "", parent_id: 0, tax_link: "", tax_icon: "", tax_marker: "",
+                tax_desc: "", count_view: 0, tax_lan: "en", tax_type: "tax",
+                tax_active: "yes" }, _defineProperty(_f5Taxonomy, 'tax_lan', 1), _defineProperty(_f5Taxonomy, 'created_at', ""), _f5Taxonomy),
             perPage: 10,
             submit: true,
             edit: false,
@@ -16317,92 +16317,94 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        newCategory: function newCategory() {
-            this.category = this.f5Category;
+        newTaxonomy: function newTaxonomy() {
+            this.taxonomy = this.f5Taxonomy;
         },
         search: function search() {
+            this.searchQuery = this.searchQuery.trim();
             if (this.searchQuery == "") {
                 this.submit = true;
                 this.edit = false;
-                this.category = this.f5Category;
-                this.fetchCategory();
+                this.taxonomy = this.f5Taxonomy;
+                this.fetchTaxonomy();
             } else {
-                this.searchCategory();
+                this.searchTaxonomy();
             }
         },
-        searchCategory: function searchCategory() {
+        searchTaxonomy: function searchTaxonomy() {
             var _this = this;
 
-            this.segUrl = '/category/search?bpcategory_name=' + this.searchQuery + '&per_page=' + this.perPage;
+            this.segUrl = '/taxonomy/search?bptax_name=' + this.searchQuery + '&per_page=' + this.perPage;
             this.$http.get(this.url + this.segUrl).then(function (response) {
-                if (response.data.data) {
+                if (response.length > 0) {
                     if (response.data.data.length == 1) {
                         _this.perPage = 10;
-                        _this.category = response.data.data[0];
+                        _this.taxonomy = response.data.data[0];
                     } else {
-                        _this.categories = response.data.data;
+                        _this.taxonomies = response.data.data;
                     }
                 }
             }, function (response) {
                 // error callback
             });
         },
-        fetchCategory: function fetchCategory() {
+        fetchTaxonomy: function fetchTaxonomy() {
             var _this2 = this;
 
-            this.segUrl = '/category?per_page=' + this.perPage;
+            this.segUrl = '/taxonomy?per_page=' + this.perPage;
             this.$http.get(this.url + this.segUrl).then(function (response) {
                 _this2.total = response.data.total;
-                _this2.allCategory = response.data.all;
-                _this2.categories = response.data.data.data;
+                _this2.allTaxonomy = response.data.all;
+                _this2.taxonomies = response.data.data.data;
             }, function (response) {
                 // error callback
             });
         },
-        btnCategory: function btnCategory(id) {
+        btnTaxonomy: function btnTaxonomy(id) {
             var _this3 = this;
 
-            var category = this.category;
-            this.category = this.f5Category;
+            var taxonomy = this.taxonomy;
+            this.taxonomy = this.f5Taxonomy;
             if (id == 0) {
-                this.segUrl = '/category';
-                this.$http.post(this.url + this.segUrl, category).then(function (response) {
-                    _this3.fetchCategory();
+                this.segUrl = '/taxonomy';
+                this.$http.post(this.url + this.segUrl, taxonomy).then(function (response) {
+                    _this3.fetchTaxonomy();
                 }, function (response) {
                     // error callback
                 });
             } else {
-                this.segUrl = '/category/' + id;
-                this.$http.patch(this.url + this.segUrl, category).then(function (response) {
-                    _this3.fetchCategory();
+                this.segUrl = '/taxonomy/' + id;
+                this.$http.patch(this.url + this.segUrl, taxonomy).then(function (response) {
+                    _this3.fetchTaxonomy();
                 }, function (response) {
                     // error callback
                 });
             }
-            $("#category_name").focus();
+
+            $("#tax_name").focus();
             this.total = this.total + 1;
         },
-        btnEditCategory: function btnEditCategory(id) {
+        btnEditTaxonomy: function btnEditTaxonomy(id) {
             this.submit = false;
             this.edit = true;
-            this.category = this.categories[id];
+            this.taxonomy = this.taxonomies[id];
         },
-        btnDeleteCategory: function btnDeleteCategory(id) {
+        btnDeleteTaxonomy: function btnDeleteTaxonomy(id) {
             var _this4 = this;
 
-            this.segUrl = '/category/' + id;
+            this.segUrl = '/taxonomy/' + id;
             this.$http.delete(this.url + this.segUrl).then(function (response) {
-                _this4.fetchCategory();
+                _this4.fetchTaxonomy();
             }, function (response) {});
         },
         loadMore: function loadMore(filter) {
-            if (filter == 'category') {
-                if (this.segUrl.search('category') > 0) {
+            if (filter == 'taxonomy') {
+                if (this.segUrl.search('taxonomy') > 0) {
                     this.getPerPage();
-                    this.fetchCategory();
+                    this.fetchTaxonomy();
                 } else {
                     this.perPage = 20;
-                    this.fetchCategory();
+                    this.fetchTaxonomy();
                 }
             }
         },
@@ -16410,8 +16412,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var array = this.segUrl.split('per_page=');
             this.perPage = parseInt(array[1]) + 10;
         },
-        categoryPara: function categoryPara() {
-            this.category.category_link = this.category.category_name.replace(/[\. ,:-=]+/g, "-").toLowerCase();
+        taxonomyPara: function taxonomyPara() {
+            this.taxonomy.tax_link = this.taxonomy.tax_name.replace(/[\. ,:-=]+/g, "-").toLowerCase();
         }
     },
     filters: {
@@ -16424,21 +16426,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         parentName: function parentName(pos) {
             var x, parent_name;
+            var x, parent_name;
             if (pos == 0) {
                 parent_name = '';
+                return parent_name;
             } else {
                 parent_name = pos;
-                // for (x in this.allCategory) {
-                //   if(this.allCategory[x].category_id == pos)
-                //     parent_name = this.allCategory[x].category_name;
-                // }   
             }
-
+            // for (x in this.allTaxonomy) {
+            //   if(this.allTaxonomy[x].tax_id == pos)
+            //     parent_name = this.allTaxonomy[x].tax_name;
+            // }
             return parent_name;
         }
     },
     mounted: function mounted() {
-        this.fetchCategory();
+        this.fetchTaxonomy();
     }
 });
 
@@ -17024,7 +17027,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -17208,7 +17210,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -18168,7 +18169,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             segUrl: '',
             selected: [],
             searchQuery: '',
-            allCategory: [{ category_name: '', category_id: '' }],
+            allCategory: [{ tax_name: '', tax_id: '' }],
             posts: [{ id: 0,
                 title: "",
                 body: "",
@@ -18708,7 +18709,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -18890,7 +18890,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -19039,31 +19040,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['page', 'url'],
     data: function data() {
+        var _taxonomy, _f5Taxonomy;
+
         return {
             segUrl: '',
             searchQuery: '',
             allTaxonomy: [{ tax_name: '', tax_id: '' }],
             taxonomies: [{ tax_id: 1, tax_name: "", tax_name_mm: "", parent_id: 0, tax_link: "", tax_icon: "", tax_marker: "",
-                tax_desc: "", count_view: 0, tax_lan: "en", tax_dash: 0,
-                tax_active: "yes", tax_created: 0, created_at: "" }],
-            taxonomy: { tax_id: 1,
+                tax_desc: "", count_view: 0, tax_lan: 1, tax_type: "tax",
+                tax_active: "yes", created_at: "" }],
+            taxonomy: (_taxonomy = { tax_id: 1,
                 tax_name: "",
                 tax_name_mm: "",
                 parent_id: 0,
                 tax_link: "",
                 tax_icon: "fa fa-list",
                 tax_marker: "",
-                tax_desc: "",
+                tax_desc: " ",
                 count_view: 0,
                 tax_lan: "en",
-                tax_dash: 0,
-                tax_active: "yes",
-                tax_created: 0,
-                created_at: ""
-            },
-            f5Taxonomy: { tax_id: 1, tax_name: "", tax_name_mm: "", parent_id: 0, tax_link: "", tax_icon: "", tax_marker: "",
-                tax_desc: "", count_view: 0, tax_lan: "en", tax_dash: 0,
-                tax_active: "yes", tax_created: 0, created_at: "" },
+                tax_type: "tax",
+                tax_active: "yes"
+            }, _defineProperty(_taxonomy, 'tax_lan', 1), _defineProperty(_taxonomy, 'created_at', ""), _taxonomy),
+            f5Taxonomy: (_f5Taxonomy = { tax_id: 1, tax_name: "", tax_name_mm: "", parent_id: 0, tax_link: "", tax_icon: "", tax_marker: "",
+                tax_desc: "", count_view: 0, tax_lan: "en", tax_type: "tax",
+                tax_active: "yes" }, _defineProperty(_f5Taxonomy, 'tax_lan', 1), _defineProperty(_f5Taxonomy, 'created_at', ""), _f5Taxonomy),
             perPage: 10,
             submit: true,
             edit: false,
@@ -19207,7 +19208,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -32208,7 +32208,7 @@ return jQuery;
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
  * @license
- * lodash <https://lodash.com/>
+ * Lodash <https://lodash.com/>
  * Copyright JS Foundation and other contributors <https://js.foundation/>
  * Released under MIT license <https://lodash.com/license>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -32220,13 +32220,13 @@ return jQuery;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.16.6';
+  var VERSION = '4.17.4';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
 
   /** Error message constants. */
-  var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://github.com/es-shims.',
+  var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.',
       FUNC_ERROR_TEXT = 'Expected a function';
 
   /** Used to stand-in for `undefined` hash values. */
@@ -32238,21 +32238,26 @@ return jQuery;
   /** Used as the internal argument placeholder. */
   var PLACEHOLDER = '__lodash_placeholder__';
 
-  /** Used to compose bitmasks for function metadata. */
-  var BIND_FLAG = 1,
-      BIND_KEY_FLAG = 2,
-      CURRY_BOUND_FLAG = 4,
-      CURRY_FLAG = 8,
-      CURRY_RIGHT_FLAG = 16,
-      PARTIAL_FLAG = 32,
-      PARTIAL_RIGHT_FLAG = 64,
-      ARY_FLAG = 128,
-      REARG_FLAG = 256,
-      FLIP_FLAG = 512;
+  /** Used to compose bitmasks for cloning. */
+  var CLONE_DEEP_FLAG = 1,
+      CLONE_FLAT_FLAG = 2,
+      CLONE_SYMBOLS_FLAG = 4;
 
-  /** Used to compose bitmasks for comparison styles. */
-  var UNORDERED_COMPARE_FLAG = 1,
-      PARTIAL_COMPARE_FLAG = 2;
+  /** Used to compose bitmasks for value comparisons. */
+  var COMPARE_PARTIAL_FLAG = 1,
+      COMPARE_UNORDERED_FLAG = 2;
+
+  /** Used to compose bitmasks for function metadata. */
+  var WRAP_BIND_FLAG = 1,
+      WRAP_BIND_KEY_FLAG = 2,
+      WRAP_CURRY_BOUND_FLAG = 4,
+      WRAP_CURRY_FLAG = 8,
+      WRAP_CURRY_RIGHT_FLAG = 16,
+      WRAP_PARTIAL_FLAG = 32,
+      WRAP_PARTIAL_RIGHT_FLAG = 64,
+      WRAP_ARY_FLAG = 128,
+      WRAP_REARG_FLAG = 256,
+      WRAP_FLIP_FLAG = 512;
 
   /** Used as default options for `_.truncate`. */
   var DEFAULT_TRUNC_LENGTH = 30,
@@ -32280,15 +32285,15 @@ return jQuery;
 
   /** Used to associate wrap methods with their bit flags. */
   var wrapFlags = [
-    ['ary', ARY_FLAG],
-    ['bind', BIND_FLAG],
-    ['bindKey', BIND_KEY_FLAG],
-    ['curry', CURRY_FLAG],
-    ['curryRight', CURRY_RIGHT_FLAG],
-    ['flip', FLIP_FLAG],
-    ['partial', PARTIAL_FLAG],
-    ['partialRight', PARTIAL_RIGHT_FLAG],
-    ['rearg', REARG_FLAG]
+    ['ary', WRAP_ARY_FLAG],
+    ['bind', WRAP_BIND_FLAG],
+    ['bindKey', WRAP_BIND_KEY_FLAG],
+    ['curry', WRAP_CURRY_FLAG],
+    ['curryRight', WRAP_CURRY_RIGHT_FLAG],
+    ['flip', WRAP_FLIP_FLAG],
+    ['partial', WRAP_PARTIAL_FLAG],
+    ['partialRight', WRAP_PARTIAL_RIGHT_FLAG],
+    ['rearg', WRAP_REARG_FLAG]
   ];
 
   /** `Object#toString` result references. */
@@ -32407,8 +32412,10 @@ return jQuery;
 
   /** Used to compose unicode character classes. */
   var rsAstralRange = '\\ud800-\\udfff',
-      rsComboMarksRange = '\\u0300-\\u036f\\ufe20-\\ufe23',
-      rsComboSymbolsRange = '\\u20d0-\\u20f0',
+      rsComboMarksRange = '\\u0300-\\u036f',
+      reComboHalfMarksRange = '\\ufe20-\\ufe2f',
+      rsComboSymbolsRange = '\\u20d0-\\u20ff',
+      rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
       rsDingbatRange = '\\u2700-\\u27bf',
       rsLowerRange = 'a-z\\xdf-\\xf6\\xf8-\\xff',
       rsMathOpRange = '\\xac\\xb1\\xd7\\xf7',
@@ -32423,7 +32430,7 @@ return jQuery;
   var rsApos = "['\u2019]",
       rsAstral = '[' + rsAstralRange + ']',
       rsBreak = '[' + rsBreakRange + ']',
-      rsCombo = '[' + rsComboMarksRange + rsComboSymbolsRange + ']',
+      rsCombo = '[' + rsComboRange + ']',
       rsDigits = '\\d+',
       rsDingbat = '[' + rsDingbatRange + ']',
       rsLower = '[' + rsLowerRange + ']',
@@ -32475,7 +32482,7 @@ return jQuery;
   ].join('|'), 'g');
 
   /** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
-  var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
+  var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboRange + rsVarRange + ']');
 
   /** Used to detect strings that need a more robust regexp to match words. */
   var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2,}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
@@ -32638,7 +32645,7 @@ return jQuery;
   /** Used to access faster Node.js helpers. */
   var nodeUtil = (function() {
     try {
-      return freeProcess && freeProcess.binding('util');
+      return freeProcess && freeProcess.binding && freeProcess.binding('util');
     } catch (e) {}
   }());
 
@@ -33768,9 +33775,9 @@ return jQuery;
      * Shortcut fusion is an optimization to merge iteratee calls; this avoids
      * the creation of intermediate arrays and can greatly reduce the number of
      * iteratee executions. Sections of a chain sequence qualify for shortcut
-     * fusion if the section is applied to an array of at least `200` elements
-     * and any iteratees accept only one argument. The heuristic for whether a
-     * section qualifies for shortcut fusion is subject to change.
+     * fusion if the section is applied to an array and iteratees accept only
+     * one argument. The heuristic for whether a section qualifies for shortcut
+     * fusion is subject to change.
      *
      * Chaining is supported in custom builds as long as the `_#value` method is
      * directly or indirectly included in the build.
@@ -33929,8 +33936,8 @@ return jQuery;
 
     /**
      * By default, the template delimiters used by lodash are like those in
-     * embedded Ruby (ERB). Change the following template settings to use
-     * alternative delimiters.
+     * embedded Ruby (ERB) as well as ES2015 template strings. Change the
+     * following template settings to use alternative delimiters.
      *
      * @static
      * @memberOf _
@@ -34077,8 +34084,7 @@ return jQuery;
           resIndex = 0,
           takeCount = nativeMin(length, this.__takeCount__);
 
-      if (!isArr || arrLength < LARGE_ARRAY_SIZE ||
-          (arrLength == length && takeCount == length)) {
+      if (!isArr || (!isRight && arrLength == length && takeCount == length)) {
         return baseWrapperValue(array, this.__actions__);
       }
       var result = [];
@@ -34192,7 +34198,7 @@ return jQuery;
      */
     function hashHas(key) {
       var data = this.__data__;
-      return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+      return nativeCreate ? (data[key] !== undefined) : hasOwnProperty.call(data, key);
     }
 
     /**
@@ -34666,24 +34672,6 @@ return jQuery;
     }
 
     /**
-     * Used by `_.defaults` to customize its `_.assignIn` use.
-     *
-     * @private
-     * @param {*} objValue The destination value.
-     * @param {*} srcValue The source value.
-     * @param {string} key The key of the property to assign.
-     * @param {Object} object The parent object of `objValue`.
-     * @returns {*} Returns the value to assign.
-     */
-    function assignInDefaults(objValue, srcValue, key, object) {
-      if (objValue === undefined ||
-          (eq(objValue, objectProto[key]) && !hasOwnProperty.call(object, key))) {
-        return srcValue;
-      }
-      return objValue;
-    }
-
-    /**
      * This function is like `assignValue` except that it doesn't assign
      * `undefined` values.
      *
@@ -34767,6 +34755,19 @@ return jQuery;
     }
 
     /**
+     * The base implementation of `_.assignIn` without support for multiple sources
+     * or `customizer` functions.
+     *
+     * @private
+     * @param {Object} object The destination object.
+     * @param {Object} source The source object.
+     * @returns {Object} Returns `object`.
+     */
+    function baseAssignIn(object, source) {
+      return object && copyObject(source, keysIn(source), object);
+    }
+
+    /**
      * The base implementation of `assignValue` and `assignMergeValue` without
      * value checks.
      *
@@ -34793,7 +34794,7 @@ return jQuery;
      *
      * @private
      * @param {Object} object The object to iterate over.
-     * @param {string[]} paths The property paths of elements to pick.
+     * @param {string[]} paths The property paths to pick.
      * @returns {Array} Returns the picked elements.
      */
     function baseAt(object, paths) {
@@ -34835,16 +34836,22 @@ return jQuery;
      *
      * @private
      * @param {*} value The value to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @param {boolean} [isFull] Specify a clone including symbols.
+     * @param {boolean} bitmask The bitmask flags.
+     *  1 - Deep clone
+     *  2 - Flatten inherited properties
+     *  4 - Clone symbols
      * @param {Function} [customizer] The function to customize cloning.
      * @param {string} [key] The key of `value`.
      * @param {Object} [object] The parent object of `value`.
      * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
      * @returns {*} Returns the cloned value.
      */
-    function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
-      var result;
+    function baseClone(value, bitmask, customizer, key, object, stack) {
+      var result,
+          isDeep = bitmask & CLONE_DEEP_FLAG,
+          isFlat = bitmask & CLONE_FLAT_FLAG,
+          isFull = bitmask & CLONE_SYMBOLS_FLAG;
+
       if (customizer) {
         result = object ? customizer(value, key, object, stack) : customizer(value);
       }
@@ -34868,9 +34875,11 @@ return jQuery;
           return cloneBuffer(value, isDeep);
         }
         if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
-          result = initCloneObject(isFunc ? {} : value);
+          result = (isFlat || isFunc) ? {} : initCloneObject(value);
           if (!isDeep) {
-            return copySymbols(value, baseAssign(result, value));
+            return isFlat
+              ? copySymbolsIn(value, baseAssignIn(result, value))
+              : copySymbols(value, baseAssign(result, value));
           }
         } else {
           if (!cloneableTags[tag]) {
@@ -34887,14 +34896,18 @@ return jQuery;
       }
       stack.set(value, result);
 
-      var props = isArr ? undefined : (isFull ? getAllKeys : keys)(value);
+      var keysFunc = isFull
+        ? (isFlat ? getAllKeysIn : getAllKeys)
+        : (isFlat ? keysIn : keys);
+
+      var props = isArr ? undefined : keysFunc(value);
       arrayEach(props || value, function(subValue, key) {
         if (props) {
           key = subValue;
           subValue = value[key];
         }
         // Recursively populate clone (susceptible to call stack limits).
-        assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
+        assignValue(result, key, baseClone(subValue, bitmask, customizer, key, value, stack));
       });
       return result;
     }
@@ -35232,7 +35245,7 @@ return jQuery;
      * @returns {*} Returns the resolved value.
      */
     function baseGet(object, path) {
-      path = isKey(path, object) ? [path] : castPath(path);
+      path = castPath(path, object);
 
       var index = 0,
           length = path.length;
@@ -35270,8 +35283,7 @@ return jQuery;
       if (value == null) {
         return value === undefined ? undefinedTag : nullTag;
       }
-      value = Object(value);
-      return (symToStringTag && symToStringTag in value)
+      return (symToStringTag && symToStringTag in Object(value))
         ? getRawTag(value)
         : objectToString(value);
     }
@@ -35418,12 +35430,9 @@ return jQuery;
      * @returns {*} Returns the result of the invoked method.
      */
     function baseInvoke(object, path, args) {
-      if (!isKey(path, object)) {
-        path = castPath(path);
-        object = parent(object, path);
-        path = last(path);
-      }
-      var func = object == null ? object : object[toKey(path)];
+      path = castPath(path, object);
+      object = parent(object, path);
+      var func = object == null ? object : object[toKey(last(path))];
       return func == null ? undefined : apply(func, object, args);
     }
 
@@ -35467,22 +35476,21 @@ return jQuery;
      * @private
      * @param {*} value The value to compare.
      * @param {*} other The other value to compare.
+     * @param {boolean} bitmask The bitmask flags.
+     *  1 - Unordered comparison
+     *  2 - Partial comparison
      * @param {Function} [customizer] The function to customize comparisons.
-     * @param {boolean} [bitmask] The bitmask of comparison flags.
-     *  The bitmask may be composed of the following flags:
-     *     1 - Unordered comparison
-     *     2 - Partial comparison
      * @param {Object} [stack] Tracks traversed `value` and `other` objects.
      * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
      */
-    function baseIsEqual(value, other, customizer, bitmask, stack) {
+    function baseIsEqual(value, other, bitmask, customizer, stack) {
       if (value === other) {
         return true;
       }
-      if (value == null || other == null || (!isObject(value) && !isObjectLike(other))) {
+      if (value == null || other == null || (!isObjectLike(value) && !isObjectLike(other))) {
         return value !== value && other !== other;
       }
-      return baseIsEqualDeep(value, other, baseIsEqual, customizer, bitmask, stack);
+      return baseIsEqualDeep(value, other, bitmask, customizer, baseIsEqual, stack);
     }
 
     /**
@@ -35493,27 +35501,21 @@ return jQuery;
      * @private
      * @param {Object} object The object to compare.
      * @param {Object} other The other object to compare.
+     * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
+     * @param {Function} customizer The function to customize comparisons.
      * @param {Function} equalFunc The function to determine equivalents of values.
-     * @param {Function} [customizer] The function to customize comparisons.
-     * @param {number} [bitmask] The bitmask of comparison flags. See `baseIsEqual`
-     *  for more details.
      * @param {Object} [stack] Tracks traversed `object` and `other` objects.
      * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
      */
-    function baseIsEqualDeep(object, other, equalFunc, customizer, bitmask, stack) {
+    function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
       var objIsArr = isArray(object),
           othIsArr = isArray(other),
-          objTag = arrayTag,
-          othTag = arrayTag;
+          objTag = objIsArr ? arrayTag : getTag(object),
+          othTag = othIsArr ? arrayTag : getTag(other);
 
-      if (!objIsArr) {
-        objTag = getTag(object);
-        objTag = objTag == argsTag ? objectTag : objTag;
-      }
-      if (!othIsArr) {
-        othTag = getTag(other);
-        othTag = othTag == argsTag ? objectTag : othTag;
-      }
+      objTag = objTag == argsTag ? objectTag : objTag;
+      othTag = othTag == argsTag ? objectTag : othTag;
+
       var objIsObj = objTag == objectTag,
           othIsObj = othTag == objectTag,
           isSameTag = objTag == othTag;
@@ -35528,10 +35530,10 @@ return jQuery;
       if (isSameTag && !objIsObj) {
         stack || (stack = new Stack);
         return (objIsArr || isTypedArray(object))
-          ? equalArrays(object, other, equalFunc, customizer, bitmask, stack)
-          : equalByTag(object, other, objTag, equalFunc, customizer, bitmask, stack);
+          ? equalArrays(object, other, bitmask, customizer, equalFunc, stack)
+          : equalByTag(object, other, objTag, bitmask, customizer, equalFunc, stack);
       }
-      if (!(bitmask & PARTIAL_COMPARE_FLAG)) {
+      if (!(bitmask & COMPARE_PARTIAL_FLAG)) {
         var objIsWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
             othIsWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
 
@@ -35540,14 +35542,14 @@ return jQuery;
               othUnwrapped = othIsWrapped ? other.value() : other;
 
           stack || (stack = new Stack);
-          return equalFunc(objUnwrapped, othUnwrapped, customizer, bitmask, stack);
+          return equalFunc(objUnwrapped, othUnwrapped, bitmask, customizer, stack);
         }
       }
       if (!isSameTag) {
         return false;
       }
       stack || (stack = new Stack);
-      return equalObjects(object, other, equalFunc, customizer, bitmask, stack);
+      return equalObjects(object, other, bitmask, customizer, equalFunc, stack);
     }
 
     /**
@@ -35605,7 +35607,7 @@ return jQuery;
             var result = customizer(objValue, srcValue, key, object, source, stack);
           }
           if (!(result === undefined
-                ? baseIsEqual(srcValue, objValue, customizer, UNORDERED_COMPARE_FLAG | PARTIAL_COMPARE_FLAG, stack)
+                ? baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG | COMPARE_UNORDERED_FLAG, customizer, stack)
                 : result
               )) {
             return false;
@@ -35795,7 +35797,7 @@ return jQuery;
         var objValue = get(object, path);
         return (objValue === undefined && objValue === srcValue)
           ? hasIn(object, path)
-          : baseIsEqual(srcValue, objValue, undefined, UNORDERED_COMPARE_FLAG | PARTIAL_COMPARE_FLAG);
+          : baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG | COMPARE_UNORDERED_FLAG);
       };
     }
 
@@ -35957,13 +35959,12 @@ return jQuery;
      *
      * @private
      * @param {Object} object The source object.
-     * @param {string[]} props The property identifiers to pick.
+     * @param {string[]} paths The property paths to pick.
      * @returns {Object} Returns the new object.
      */
-    function basePick(object, props) {
-      object = Object(object);
-      return basePickBy(object, props, function(value, key) {
-        return key in object;
+    function basePick(object, paths) {
+      return basePickBy(object, paths, function(value, path) {
+        return hasIn(object, path);
       });
     }
 
@@ -35972,21 +35973,21 @@ return jQuery;
      *
      * @private
      * @param {Object} object The source object.
-     * @param {string[]} props The property identifiers to pick from.
+     * @param {string[]} paths The property paths to pick.
      * @param {Function} predicate The function invoked per property.
      * @returns {Object} Returns the new object.
      */
-    function basePickBy(object, props, predicate) {
+    function basePickBy(object, paths, predicate) {
       var index = -1,
-          length = props.length,
+          length = paths.length,
           result = {};
 
       while (++index < length) {
-        var key = props[index],
-            value = object[key];
+        var path = paths[index],
+            value = baseGet(object, path);
 
-        if (predicate(value, key)) {
-          baseAssignValue(result, key, value);
+        if (predicate(value, path)) {
+          baseSet(result, castPath(path, object), value);
         }
       }
       return result;
@@ -36062,17 +36063,8 @@ return jQuery;
           var previous = index;
           if (isIndex(index)) {
             splice.call(array, index, 1);
-          }
-          else if (!isKey(index, array)) {
-            var path = castPath(index),
-                object = parent(array, path);
-
-            if (object != null) {
-              delete object[toKey(last(path))];
-            }
-          }
-          else {
-            delete array[toKey(index)];
+          } else {
+            baseUnset(array, index);
           }
         }
       }
@@ -36193,7 +36185,7 @@ return jQuery;
       if (!isObject(object)) {
         return object;
       }
-      path = isKey(path, object) ? [path] : castPath(path);
+      path = castPath(path, object);
 
       var index = -1,
           length = path.length,
@@ -36530,15 +36522,13 @@ return jQuery;
      *
      * @private
      * @param {Object} object The object to modify.
-     * @param {Array|string} path The path of the property to unset.
+     * @param {Array|string} path The property path to unset.
      * @returns {boolean} Returns `true` if the property is deleted, else `false`.
      */
     function baseUnset(object, path) {
-      path = isKey(path, object) ? [path] : castPath(path);
+      path = castPath(path, object);
       object = parent(object, path);
-
-      var key = toKey(last(path));
-      return !(object != null && hasOwnProperty.call(object, key)) || delete object[key];
+      return object == null || delete object[toKey(last(path))];
     }
 
     /**
@@ -36678,10 +36668,14 @@ return jQuery;
      *
      * @private
      * @param {*} value The value to inspect.
+     * @param {Object} [object] The object to query keys on.
      * @returns {Array} Returns the cast property path array.
      */
-    function castPath(value) {
-      return isArray(value) ? value : stringToPath(value);
+    function castPath(value, object) {
+      if (isArray(value)) {
+        return value;
+      }
+      return isKey(value, object) ? [value] : stringToPath(toString(value));
     }
 
     /**
@@ -36775,7 +36769,7 @@ return jQuery;
      * @returns {Object} Returns the cloned map.
      */
     function cloneMap(map, isDeep, cloneFunc) {
-      var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
+      var array = isDeep ? cloneFunc(mapToArray(map), CLONE_DEEP_FLAG) : mapToArray(map);
       return arrayReduce(array, addMapEntry, new map.constructor);
     }
 
@@ -36802,7 +36796,7 @@ return jQuery;
      * @returns {Object} Returns the cloned set.
      */
     function cloneSet(set, isDeep, cloneFunc) {
-      var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
+      var array = isDeep ? cloneFunc(setToArray(set), CLONE_DEEP_FLAG) : setToArray(set);
       return arrayReduce(array, addSetEntry, new set.constructor);
     }
 
@@ -37037,7 +37031,7 @@ return jQuery;
     }
 
     /**
-     * Copies own symbol properties of `source` to `object`.
+     * Copies own symbols of `source` to `object`.
      *
      * @private
      * @param {Object} source The object to copy symbols from.
@@ -37046,6 +37040,18 @@ return jQuery;
      */
     function copySymbols(source, object) {
       return copyObject(source, getSymbols(source), object);
+    }
+
+    /**
+     * Copies own and inherited symbols of `source` to `object`.
+     *
+     * @private
+     * @param {Object} source The object to copy symbols from.
+     * @param {Object} [object={}] The object to copy symbols to.
+     * @returns {Object} Returns `object`.
+     */
+    function copySymbolsIn(source, object) {
+      return copyObject(source, getSymbolsIn(source), object);
     }
 
     /**
@@ -37162,7 +37168,7 @@ return jQuery;
      * @returns {Function} Returns the new wrapped function.
      */
     function createBind(func, bitmask, thisArg) {
-      var isBind = bitmask & BIND_FLAG,
+      var isBind = bitmask & WRAP_BIND_FLAG,
           Ctor = createCtor(func);
 
       function wrapper() {
@@ -37335,7 +37341,7 @@ return jQuery;
               data = funcName == 'wrapper' ? getData(func) : undefined;
 
           if (data && isLaziable(data[0]) &&
-                data[1] == (ARY_FLAG | CURRY_FLAG | PARTIAL_FLAG | REARG_FLAG) &&
+                data[1] == (WRAP_ARY_FLAG | WRAP_CURRY_FLAG | WRAP_PARTIAL_FLAG | WRAP_REARG_FLAG) &&
                 !data[4].length && data[9] == 1
               ) {
             wrapper = wrapper[getFuncName(data[0])].apply(wrapper, data[3]);
@@ -37349,8 +37355,7 @@ return jQuery;
           var args = arguments,
               value = args[0];
 
-          if (wrapper && args.length == 1 &&
-              isArray(value) && value.length >= LARGE_ARRAY_SIZE) {
+          if (wrapper && args.length == 1 && isArray(value)) {
             return wrapper.plant(value).value();
           }
           var index = 0,
@@ -37384,11 +37389,11 @@ return jQuery;
      * @returns {Function} Returns the new wrapped function.
      */
     function createHybrid(func, bitmask, thisArg, partials, holders, partialsRight, holdersRight, argPos, ary, arity) {
-      var isAry = bitmask & ARY_FLAG,
-          isBind = bitmask & BIND_FLAG,
-          isBindKey = bitmask & BIND_KEY_FLAG,
-          isCurried = bitmask & (CURRY_FLAG | CURRY_RIGHT_FLAG),
-          isFlip = bitmask & FLIP_FLAG,
+      var isAry = bitmask & WRAP_ARY_FLAG,
+          isBind = bitmask & WRAP_BIND_FLAG,
+          isBindKey = bitmask & WRAP_BIND_KEY_FLAG,
+          isCurried = bitmask & (WRAP_CURRY_FLAG | WRAP_CURRY_RIGHT_FLAG),
+          isFlip = bitmask & WRAP_FLIP_FLAG,
           Ctor = isBindKey ? undefined : createCtor(func);
 
       function wrapper() {
@@ -37539,7 +37544,7 @@ return jQuery;
      * @returns {Function} Returns the new wrapped function.
      */
     function createPartial(func, bitmask, thisArg, partials) {
-      var isBind = bitmask & BIND_FLAG,
+      var isBind = bitmask & WRAP_BIND_FLAG,
           Ctor = createCtor(func);
 
       function wrapper() {
@@ -37621,17 +37626,17 @@ return jQuery;
      * @returns {Function} Returns the new wrapped function.
      */
     function createRecurry(func, bitmask, wrapFunc, placeholder, thisArg, partials, holders, argPos, ary, arity) {
-      var isCurry = bitmask & CURRY_FLAG,
+      var isCurry = bitmask & WRAP_CURRY_FLAG,
           newHolders = isCurry ? holders : undefined,
           newHoldersRight = isCurry ? undefined : holders,
           newPartials = isCurry ? partials : undefined,
           newPartialsRight = isCurry ? undefined : partials;
 
-      bitmask |= (isCurry ? PARTIAL_FLAG : PARTIAL_RIGHT_FLAG);
-      bitmask &= ~(isCurry ? PARTIAL_RIGHT_FLAG : PARTIAL_FLAG);
+      bitmask |= (isCurry ? WRAP_PARTIAL_FLAG : WRAP_PARTIAL_RIGHT_FLAG);
+      bitmask &= ~(isCurry ? WRAP_PARTIAL_RIGHT_FLAG : WRAP_PARTIAL_FLAG);
 
-      if (!(bitmask & CURRY_BOUND_FLAG)) {
-        bitmask &= ~(BIND_FLAG | BIND_KEY_FLAG);
+      if (!(bitmask & WRAP_CURRY_BOUND_FLAG)) {
+        bitmask &= ~(WRAP_BIND_FLAG | WRAP_BIND_KEY_FLAG);
       }
       var newData = [
         func, bitmask, thisArg, newPartials, newHolders, newPartialsRight,
@@ -37657,7 +37662,7 @@ return jQuery;
       var func = Math[methodName];
       return function(number, precision) {
         number = toNumber(number);
-        precision = nativeMin(toInteger(precision), 292);
+        precision = precision == null ? 0 : nativeMin(toInteger(precision), 292);
         if (precision) {
           // Shift with exponential notation to avoid floating-point issues.
           // See [MDN](https://mdn.io/round#Examples) for more details.
@@ -37709,17 +37714,16 @@ return jQuery;
      * @private
      * @param {Function|string} func The function or method name to wrap.
      * @param {number} bitmask The bitmask flags.
-     *  The bitmask may be composed of the following flags:
-     *     1 - `_.bind`
-     *     2 - `_.bindKey`
-     *     4 - `_.curry` or `_.curryRight` of a bound function
-     *     8 - `_.curry`
-     *    16 - `_.curryRight`
-     *    32 - `_.partial`
-     *    64 - `_.partialRight`
-     *   128 - `_.rearg`
-     *   256 - `_.ary`
-     *   512 - `_.flip`
+     *    1 - `_.bind`
+     *    2 - `_.bindKey`
+     *    4 - `_.curry` or `_.curryRight` of a bound function
+     *    8 - `_.curry`
+     *   16 - `_.curryRight`
+     *   32 - `_.partial`
+     *   64 - `_.partialRight`
+     *  128 - `_.rearg`
+     *  256 - `_.ary`
+     *  512 - `_.flip`
      * @param {*} [thisArg] The `this` binding of `func`.
      * @param {Array} [partials] The arguments to be partially applied.
      * @param {Array} [holders] The `partials` placeholder indexes.
@@ -37729,20 +37733,20 @@ return jQuery;
      * @returns {Function} Returns the new wrapped function.
      */
     function createWrap(func, bitmask, thisArg, partials, holders, argPos, ary, arity) {
-      var isBindKey = bitmask & BIND_KEY_FLAG;
+      var isBindKey = bitmask & WRAP_BIND_KEY_FLAG;
       if (!isBindKey && typeof func != 'function') {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       var length = partials ? partials.length : 0;
       if (!length) {
-        bitmask &= ~(PARTIAL_FLAG | PARTIAL_RIGHT_FLAG);
+        bitmask &= ~(WRAP_PARTIAL_FLAG | WRAP_PARTIAL_RIGHT_FLAG);
         partials = holders = undefined;
       }
       ary = ary === undefined ? ary : nativeMax(toInteger(ary), 0);
       arity = arity === undefined ? arity : toInteger(arity);
       length -= holders ? holders.length : 0;
 
-      if (bitmask & PARTIAL_RIGHT_FLAG) {
+      if (bitmask & WRAP_PARTIAL_RIGHT_FLAG) {
         var partialsRight = partials,
             holdersRight = holders;
 
@@ -37763,18 +37767,18 @@ return jQuery;
       thisArg = newData[2];
       partials = newData[3];
       holders = newData[4];
-      arity = newData[9] = newData[9] == null
+      arity = newData[9] = newData[9] === undefined
         ? (isBindKey ? 0 : func.length)
         : nativeMax(newData[9] - length, 0);
 
-      if (!arity && bitmask & (CURRY_FLAG | CURRY_RIGHT_FLAG)) {
-        bitmask &= ~(CURRY_FLAG | CURRY_RIGHT_FLAG);
+      if (!arity && bitmask & (WRAP_CURRY_FLAG | WRAP_CURRY_RIGHT_FLAG)) {
+        bitmask &= ~(WRAP_CURRY_FLAG | WRAP_CURRY_RIGHT_FLAG);
       }
-      if (!bitmask || bitmask == BIND_FLAG) {
+      if (!bitmask || bitmask == WRAP_BIND_FLAG) {
         var result = createBind(func, bitmask, thisArg);
-      } else if (bitmask == CURRY_FLAG || bitmask == CURRY_RIGHT_FLAG) {
+      } else if (bitmask == WRAP_CURRY_FLAG || bitmask == WRAP_CURRY_RIGHT_FLAG) {
         result = createCurry(func, bitmask, arity);
-      } else if ((bitmask == PARTIAL_FLAG || bitmask == (BIND_FLAG | PARTIAL_FLAG)) && !holders.length) {
+      } else if ((bitmask == WRAP_PARTIAL_FLAG || bitmask == (WRAP_BIND_FLAG | WRAP_PARTIAL_FLAG)) && !holders.length) {
         result = createPartial(func, bitmask, thisArg, partials);
       } else {
         result = createHybrid.apply(undefined, newData);
@@ -37784,21 +37788,77 @@ return jQuery;
     }
 
     /**
+     * Used by `_.defaults` to customize its `_.assignIn` use to assign properties
+     * of source objects to the destination object for all destination properties
+     * that resolve to `undefined`.
+     *
+     * @private
+     * @param {*} objValue The destination value.
+     * @param {*} srcValue The source value.
+     * @param {string} key The key of the property to assign.
+     * @param {Object} object The parent object of `objValue`.
+     * @returns {*} Returns the value to assign.
+     */
+    function customDefaultsAssignIn(objValue, srcValue, key, object) {
+      if (objValue === undefined ||
+          (eq(objValue, objectProto[key]) && !hasOwnProperty.call(object, key))) {
+        return srcValue;
+      }
+      return objValue;
+    }
+
+    /**
+     * Used by `_.defaultsDeep` to customize its `_.merge` use to merge source
+     * objects into destination objects that are passed thru.
+     *
+     * @private
+     * @param {*} objValue The destination value.
+     * @param {*} srcValue The source value.
+     * @param {string} key The key of the property to merge.
+     * @param {Object} object The parent object of `objValue`.
+     * @param {Object} source The parent object of `srcValue`.
+     * @param {Object} [stack] Tracks traversed source values and their merged
+     *  counterparts.
+     * @returns {*} Returns the value to assign.
+     */
+    function customDefaultsMerge(objValue, srcValue, key, object, source, stack) {
+      if (isObject(objValue) && isObject(srcValue)) {
+        // Recursively merge objects and arrays (susceptible to call stack limits).
+        stack.set(srcValue, objValue);
+        baseMerge(objValue, srcValue, undefined, customDefaultsMerge, stack);
+        stack['delete'](srcValue);
+      }
+      return objValue;
+    }
+
+    /**
+     * Used by `_.omit` to customize its `_.cloneDeep` use to only clone plain
+     * objects.
+     *
+     * @private
+     * @param {*} value The value to inspect.
+     * @param {string} key The key of the property to inspect.
+     * @returns {*} Returns the uncloned value or `undefined` to defer cloning to `_.cloneDeep`.
+     */
+    function customOmitClone(value) {
+      return isPlainObject(value) ? undefined : value;
+    }
+
+    /**
      * A specialized version of `baseIsEqualDeep` for arrays with support for
      * partial deep comparisons.
      *
      * @private
      * @param {Array} array The array to compare.
      * @param {Array} other The other array to compare.
-     * @param {Function} equalFunc The function to determine equivalents of values.
+     * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
      * @param {Function} customizer The function to customize comparisons.
-     * @param {number} bitmask The bitmask of comparison flags. See `baseIsEqual`
-     *  for more details.
+     * @param {Function} equalFunc The function to determine equivalents of values.
      * @param {Object} stack Tracks traversed `array` and `other` objects.
      * @returns {boolean} Returns `true` if the arrays are equivalent, else `false`.
      */
-    function equalArrays(array, other, equalFunc, customizer, bitmask, stack) {
-      var isPartial = bitmask & PARTIAL_COMPARE_FLAG,
+    function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
+      var isPartial = bitmask & COMPARE_PARTIAL_FLAG,
           arrLength = array.length,
           othLength = other.length;
 
@@ -37812,7 +37872,7 @@ return jQuery;
       }
       var index = -1,
           result = true,
-          seen = (bitmask & UNORDERED_COMPARE_FLAG) ? new SetCache : undefined;
+          seen = (bitmask & COMPARE_UNORDERED_FLAG) ? new SetCache : undefined;
 
       stack.set(array, other);
       stack.set(other, array);
@@ -37838,7 +37898,7 @@ return jQuery;
         if (seen) {
           if (!arraySome(other, function(othValue, othIndex) {
                 if (!cacheHas(seen, othIndex) &&
-                    (arrValue === othValue || equalFunc(arrValue, othValue, customizer, bitmask, stack))) {
+                    (arrValue === othValue || equalFunc(arrValue, othValue, bitmask, customizer, stack))) {
                   return seen.push(othIndex);
                 }
               })) {
@@ -37847,7 +37907,7 @@ return jQuery;
           }
         } else if (!(
               arrValue === othValue ||
-                equalFunc(arrValue, othValue, customizer, bitmask, stack)
+                equalFunc(arrValue, othValue, bitmask, customizer, stack)
             )) {
           result = false;
           break;
@@ -37869,14 +37929,13 @@ return jQuery;
      * @param {Object} object The object to compare.
      * @param {Object} other The other object to compare.
      * @param {string} tag The `toStringTag` of the objects to compare.
-     * @param {Function} equalFunc The function to determine equivalents of values.
+     * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
      * @param {Function} customizer The function to customize comparisons.
-     * @param {number} bitmask The bitmask of comparison flags. See `baseIsEqual`
-     *  for more details.
+     * @param {Function} equalFunc The function to determine equivalents of values.
      * @param {Object} stack Tracks traversed `object` and `other` objects.
      * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
      */
-    function equalByTag(object, other, tag, equalFunc, customizer, bitmask, stack) {
+    function equalByTag(object, other, tag, bitmask, customizer, equalFunc, stack) {
       switch (tag) {
         case dataViewTag:
           if ((object.byteLength != other.byteLength) ||
@@ -37914,7 +37973,7 @@ return jQuery;
           var convert = mapToArray;
 
         case setTag:
-          var isPartial = bitmask & PARTIAL_COMPARE_FLAG;
+          var isPartial = bitmask & COMPARE_PARTIAL_FLAG;
           convert || (convert = setToArray);
 
           if (object.size != other.size && !isPartial) {
@@ -37925,11 +37984,11 @@ return jQuery;
           if (stacked) {
             return stacked == other;
           }
-          bitmask |= UNORDERED_COMPARE_FLAG;
+          bitmask |= COMPARE_UNORDERED_FLAG;
 
           // Recursively compare objects (susceptible to call stack limits).
           stack.set(object, other);
-          var result = equalArrays(convert(object), convert(other), equalFunc, customizer, bitmask, stack);
+          var result = equalArrays(convert(object), convert(other), bitmask, customizer, equalFunc, stack);
           stack['delete'](object);
           return result;
 
@@ -37948,18 +38007,17 @@ return jQuery;
      * @private
      * @param {Object} object The object to compare.
      * @param {Object} other The other object to compare.
-     * @param {Function} equalFunc The function to determine equivalents of values.
+     * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
      * @param {Function} customizer The function to customize comparisons.
-     * @param {number} bitmask The bitmask of comparison flags. See `baseIsEqual`
-     *  for more details.
+     * @param {Function} equalFunc The function to determine equivalents of values.
      * @param {Object} stack Tracks traversed `object` and `other` objects.
      * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
      */
-    function equalObjects(object, other, equalFunc, customizer, bitmask, stack) {
-      var isPartial = bitmask & PARTIAL_COMPARE_FLAG,
-          objProps = keys(object),
+    function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
+      var isPartial = bitmask & COMPARE_PARTIAL_FLAG,
+          objProps = getAllKeys(object),
           objLength = objProps.length,
-          othProps = keys(other),
+          othProps = getAllKeys(other),
           othLength = othProps.length;
 
       if (objLength != othLength && !isPartial) {
@@ -37994,7 +38052,7 @@ return jQuery;
         }
         // Recursively compare objects (susceptible to call stack limits).
         if (!(compared === undefined
-              ? (objValue === othValue || equalFunc(objValue, othValue, customizer, bitmask, stack))
+              ? (objValue === othValue || equalFunc(objValue, othValue, bitmask, customizer, stack))
               : compared
             )) {
           result = false;
@@ -38191,17 +38249,24 @@ return jQuery;
     }
 
     /**
-     * Creates an array of the own enumerable symbol properties of `object`.
+     * Creates an array of the own enumerable symbols of `object`.
      *
      * @private
      * @param {Object} object The object to query.
      * @returns {Array} Returns the array of symbols.
      */
-    var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
+    var getSymbols = !nativeGetSymbols ? stubArray : function(object) {
+      if (object == null) {
+        return [];
+      }
+      object = Object(object);
+      return arrayFilter(nativeGetSymbols(object), function(symbol) {
+        return propertyIsEnumerable.call(object, symbol);
+      });
+    };
 
     /**
-     * Creates an array of the own and inherited enumerable symbol properties
-     * of `object`.
+     * Creates an array of the own and inherited enumerable symbols of `object`.
      *
      * @private
      * @param {Object} object The object to query.
@@ -38299,7 +38364,7 @@ return jQuery;
      * @returns {boolean} Returns `true` if `path` exists, else `false`.
      */
     function hasPath(object, path, hasFunc) {
-      path = isKey(path, object) ? [path] : castPath(path);
+      path = castPath(path, object);
 
       var index = -1,
           length = path.length,
@@ -38633,22 +38698,22 @@ return jQuery;
       var bitmask = data[1],
           srcBitmask = source[1],
           newBitmask = bitmask | srcBitmask,
-          isCommon = newBitmask < (BIND_FLAG | BIND_KEY_FLAG | ARY_FLAG);
+          isCommon = newBitmask < (WRAP_BIND_FLAG | WRAP_BIND_KEY_FLAG | WRAP_ARY_FLAG);
 
       var isCombo =
-        ((srcBitmask == ARY_FLAG) && (bitmask == CURRY_FLAG)) ||
-        ((srcBitmask == ARY_FLAG) && (bitmask == REARG_FLAG) && (data[7].length <= source[8])) ||
-        ((srcBitmask == (ARY_FLAG | REARG_FLAG)) && (source[7].length <= source[8]) && (bitmask == CURRY_FLAG));
+        ((srcBitmask == WRAP_ARY_FLAG) && (bitmask == WRAP_CURRY_FLAG)) ||
+        ((srcBitmask == WRAP_ARY_FLAG) && (bitmask == WRAP_REARG_FLAG) && (data[7].length <= source[8])) ||
+        ((srcBitmask == (WRAP_ARY_FLAG | WRAP_REARG_FLAG)) && (source[7].length <= source[8]) && (bitmask == WRAP_CURRY_FLAG));
 
       // Exit early if metadata can't be merged.
       if (!(isCommon || isCombo)) {
         return data;
       }
       // Use source `thisArg` if available.
-      if (srcBitmask & BIND_FLAG) {
+      if (srcBitmask & WRAP_BIND_FLAG) {
         data[2] = source[2];
         // Set when currying a bound function.
-        newBitmask |= bitmask & BIND_FLAG ? 0 : CURRY_BOUND_FLAG;
+        newBitmask |= bitmask & WRAP_BIND_FLAG ? 0 : WRAP_CURRY_BOUND_FLAG;
       }
       // Compose partial arguments.
       var value = source[3];
@@ -38670,7 +38735,7 @@ return jQuery;
         data[7] = value;
       }
       // Use source `ary` if it's smaller.
-      if (srcBitmask & ARY_FLAG) {
+      if (srcBitmask & WRAP_ARY_FLAG) {
         data[8] = data[8] == null ? source[8] : nativeMin(data[8], source[8]);
       }
       // Use source `arity` if one is not provided.
@@ -38682,29 +38747,6 @@ return jQuery;
       data[1] = newBitmask;
 
       return data;
-    }
-
-    /**
-     * Used by `_.defaultsDeep` to customize its `_.merge` use.
-     *
-     * @private
-     * @param {*} objValue The destination value.
-     * @param {*} srcValue The source value.
-     * @param {string} key The key of the property to merge.
-     * @param {Object} object The parent object of `objValue`.
-     * @param {Object} source The parent object of `srcValue`.
-     * @param {Object} [stack] Tracks traversed source values and their merged
-     *  counterparts.
-     * @returns {*} Returns the value to assign.
-     */
-    function mergeDefaults(objValue, srcValue, key, object, source, stack) {
-      if (isObject(objValue) && isObject(srcValue)) {
-        // Recursively merge objects and arrays (susceptible to call stack limits).
-        stack.set(srcValue, objValue);
-        baseMerge(objValue, srcValue, undefined, mergeDefaults, stack);
-        stack['delete'](srcValue);
-      }
-      return objValue;
     }
 
     /**
@@ -38776,7 +38818,7 @@ return jQuery;
      * @returns {*} Returns the parent value.
      */
     function parent(object, path) {
-      return path.length == 1 ? object : baseGet(object, baseSlice(path, 0, -1));
+      return path.length < 2 ? object : baseGet(object, baseSlice(path, 0, -1));
     }
 
     /**
@@ -38916,8 +38958,6 @@ return jQuery;
      * @returns {Array} Returns the property path array.
      */
     var stringToPath = memoizeCapped(function(string) {
-      string = toString(string);
-
       var result = [];
       if (reLeadingDot.test(string)) {
         result.push('');
@@ -40451,7 +40491,7 @@ return jQuery;
      *
      * var users = [
      *   { 'user': 'barney',  'active': false },
-     *   { 'user': 'fred',    'active': false},
+     *   { 'user': 'fred',    'active': false },
      *   { 'user': 'pebbles', 'active': true }
      * ];
      *
@@ -40987,7 +41027,7 @@ return jQuery;
      * @memberOf _
      * @since 1.0.0
      * @category Seq
-     * @param {...(string|string[])} [paths] The property paths of elements to pick.
+     * @param {...(string|string[])} [paths] The property paths to pick.
      * @returns {Object} Returns the new `lodash` wrapper instance.
      * @example
      *
@@ -41652,12 +41692,10 @@ return jQuery;
     var invokeMap = baseRest(function(collection, path, args) {
       var index = -1,
           isFunc = typeof path == 'function',
-          isProp = isKey(path),
           result = isArrayLike(collection) ? Array(collection.length) : [];
 
       baseEach(collection, function(value) {
-        var func = isFunc ? path : ((isProp && value != null) ? value[path] : undefined);
-        result[++index] = func ? apply(func, value, args) : baseInvoke(value, path, args);
+        result[++index] = isFunc ? apply(path, value, args) : baseInvoke(value, path, args);
       });
       return result;
     });
@@ -42206,7 +42244,7 @@ return jQuery;
     function ary(func, n, guard) {
       n = guard ? undefined : n;
       n = (func && n == null) ? func.length : n;
-      return createWrap(func, ARY_FLAG, undefined, undefined, undefined, undefined, n);
+      return createWrap(func, WRAP_ARY_FLAG, undefined, undefined, undefined, undefined, n);
     }
 
     /**
@@ -42279,10 +42317,10 @@ return jQuery;
      * // => 'hi fred!'
      */
     var bind = baseRest(function(func, thisArg, partials) {
-      var bitmask = BIND_FLAG;
+      var bitmask = WRAP_BIND_FLAG;
       if (partials.length) {
         var holders = replaceHolders(partials, getHolder(bind));
-        bitmask |= PARTIAL_FLAG;
+        bitmask |= WRAP_PARTIAL_FLAG;
       }
       return createWrap(func, bitmask, thisArg, partials, holders);
     });
@@ -42333,10 +42371,10 @@ return jQuery;
      * // => 'hiya fred!'
      */
     var bindKey = baseRest(function(object, key, partials) {
-      var bitmask = BIND_FLAG | BIND_KEY_FLAG;
+      var bitmask = WRAP_BIND_FLAG | WRAP_BIND_KEY_FLAG;
       if (partials.length) {
         var holders = replaceHolders(partials, getHolder(bindKey));
-        bitmask |= PARTIAL_FLAG;
+        bitmask |= WRAP_PARTIAL_FLAG;
       }
       return createWrap(key, bitmask, object, partials, holders);
     });
@@ -42384,7 +42422,7 @@ return jQuery;
      */
     function curry(func, arity, guard) {
       arity = guard ? undefined : arity;
-      var result = createWrap(func, CURRY_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
+      var result = createWrap(func, WRAP_CURRY_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
       result.placeholder = curry.placeholder;
       return result;
     }
@@ -42429,7 +42467,7 @@ return jQuery;
      */
     function curryRight(func, arity, guard) {
       arity = guard ? undefined : arity;
-      var result = createWrap(func, CURRY_RIGHT_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
+      var result = createWrap(func, WRAP_CURRY_RIGHT_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
       result.placeholder = curryRight.placeholder;
       return result;
     }
@@ -42674,7 +42712,7 @@ return jQuery;
      * // => ['d', 'c', 'b', 'a']
      */
     function flip(func) {
-      return createWrap(func, FLIP_FLAG);
+      return createWrap(func, WRAP_FLIP_FLAG);
     }
 
     /**
@@ -42885,7 +42923,7 @@ return jQuery;
      */
     var partial = baseRest(function(func, partials) {
       var holders = replaceHolders(partials, getHolder(partial));
-      return createWrap(func, PARTIAL_FLAG, undefined, partials, holders);
+      return createWrap(func, WRAP_PARTIAL_FLAG, undefined, partials, holders);
     });
 
     /**
@@ -42922,7 +42960,7 @@ return jQuery;
      */
     var partialRight = baseRest(function(func, partials) {
       var holders = replaceHolders(partials, getHolder(partialRight));
-      return createWrap(func, PARTIAL_RIGHT_FLAG, undefined, partials, holders);
+      return createWrap(func, WRAP_PARTIAL_RIGHT_FLAG, undefined, partials, holders);
     });
 
     /**
@@ -42948,7 +42986,7 @@ return jQuery;
      * // => ['a', 'b', 'c']
      */
     var rearg = flatRest(function(func, indexes) {
-      return createWrap(func, REARG_FLAG, undefined, undefined, undefined, indexes);
+      return createWrap(func, WRAP_REARG_FLAG, undefined, undefined, undefined, indexes);
     });
 
     /**
@@ -43022,7 +43060,7 @@ return jQuery;
       if (typeof func != 'function') {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
-      start = start === undefined ? 0 : nativeMax(toInteger(start), 0);
+      start = start == null ? 0 : nativeMax(toInteger(start), 0);
       return baseRest(function(args) {
         var array = args[start],
             otherArgs = castSlice(args, 0, start);
@@ -43211,7 +43249,7 @@ return jQuery;
      * // => true
      */
     function clone(value) {
-      return baseClone(value, false, true);
+      return baseClone(value, CLONE_SYMBOLS_FLAG);
     }
 
     /**
@@ -43247,7 +43285,7 @@ return jQuery;
      */
     function cloneWith(value, customizer) {
       customizer = typeof customizer == 'function' ? customizer : undefined;
-      return baseClone(value, false, true, customizer);
+      return baseClone(value, CLONE_SYMBOLS_FLAG, customizer);
     }
 
     /**
@@ -43269,7 +43307,7 @@ return jQuery;
      * // => false
      */
     function cloneDeep(value) {
-      return baseClone(value, true, true);
+      return baseClone(value, CLONE_DEEP_FLAG | CLONE_SYMBOLS_FLAG);
     }
 
     /**
@@ -43302,7 +43340,7 @@ return jQuery;
      */
     function cloneDeepWith(value, customizer) {
       customizer = typeof customizer == 'function' ? customizer : undefined;
-      return baseClone(value, true, true, customizer);
+      return baseClone(value, CLONE_DEEP_FLAG | CLONE_SYMBOLS_FLAG, customizer);
     }
 
     /**
@@ -43692,7 +43730,7 @@ return jQuery;
      * date objects, error objects, maps, numbers, `Object` objects, regexes,
      * sets, strings, symbols, and typed arrays. `Object` objects are compared
      * by their own, not inherited, enumerable properties. Functions and DOM
-     * nodes are **not** supported.
+     * nodes are compared by strict equality, i.e. `===`.
      *
      * @static
      * @memberOf _
@@ -43751,7 +43789,7 @@ return jQuery;
     function isEqualWith(value, other, customizer) {
       customizer = typeof customizer == 'function' ? customizer : undefined;
       var result = customizer ? customizer(value, other) : undefined;
-      return result === undefined ? baseIsEqual(value, other, customizer) : !!result;
+      return result === undefined ? baseIsEqual(value, other, undefined, customizer) : !!result;
     }
 
     /**
@@ -44712,7 +44750,9 @@ return jQuery;
      * // => 3
      */
     function toSafeInteger(value) {
-      return baseClamp(toInteger(value), -MAX_SAFE_INTEGER, MAX_SAFE_INTEGER);
+      return value
+        ? baseClamp(toInteger(value), -MAX_SAFE_INTEGER, MAX_SAFE_INTEGER)
+        : (value === 0 ? value : 0);
     }
 
     /**
@@ -44894,7 +44934,7 @@ return jQuery;
      * @since 1.0.0
      * @category Object
      * @param {Object} object The object to iterate over.
-     * @param {...(string|string[])} [paths] The property paths of elements to pick.
+     * @param {...(string|string[])} [paths] The property paths to pick.
      * @returns {Array} Returns the picked values.
      * @example
      *
@@ -44966,7 +45006,7 @@ return jQuery;
      * // => { 'a': 1, 'b': 2 }
      */
     var defaults = baseRest(function(args) {
-      args.push(undefined, assignInDefaults);
+      args.push(undefined, customDefaultsAssignIn);
       return apply(assignInWith, undefined, args);
     });
 
@@ -44990,7 +45030,7 @@ return jQuery;
      * // => { 'a': { 'b': 2, 'c': 3 } }
      */
     var defaultsDeep = baseRest(function(args) {
-      args.push(undefined, mergeDefaults);
+      args.push(undefined, customDefaultsMerge);
       return apply(mergeWith, undefined, args);
     });
 
@@ -45621,15 +45661,16 @@ return jQuery;
 
     /**
      * The opposite of `_.pick`; this method creates an object composed of the
-     * own and inherited enumerable string keyed properties of `object` that are
-     * not omitted.
+     * own and inherited enumerable property paths of `object` that are not omitted.
+     *
+     * **Note:** This method is considerably slower than `_.pick`.
      *
      * @static
      * @since 0.1.0
      * @memberOf _
      * @category Object
      * @param {Object} object The source object.
-     * @param {...(string|string[])} [props] The property identifiers to omit.
+     * @param {...(string|string[])} [paths] The property paths to omit.
      * @returns {Object} Returns the new object.
      * @example
      *
@@ -45638,12 +45679,26 @@ return jQuery;
      * _.omit(object, ['a', 'c']);
      * // => { 'b': '2' }
      */
-    var omit = flatRest(function(object, props) {
+    var omit = flatRest(function(object, paths) {
+      var result = {};
       if (object == null) {
-        return {};
+        return result;
       }
-      props = arrayMap(props, toKey);
-      return basePick(object, baseDifference(getAllKeysIn(object), props));
+      var isDeep = false;
+      paths = arrayMap(paths, function(path) {
+        path = castPath(path, object);
+        isDeep || (isDeep = path.length > 1);
+        return path;
+      });
+      copyObject(object, getAllKeysIn(object), result);
+      if (isDeep) {
+        result = baseClone(result, CLONE_DEEP_FLAG | CLONE_FLAT_FLAG | CLONE_SYMBOLS_FLAG, customOmitClone);
+      }
+      var length = paths.length;
+      while (length--) {
+        baseUnset(result, paths[length]);
+      }
+      return result;
     });
 
     /**
@@ -45678,7 +45733,7 @@ return jQuery;
      * @memberOf _
      * @category Object
      * @param {Object} object The source object.
-     * @param {...(string|string[])} [props] The property identifiers to pick.
+     * @param {...(string|string[])} [paths] The property paths to pick.
      * @returns {Object} Returns the new object.
      * @example
      *
@@ -45687,8 +45742,8 @@ return jQuery;
      * _.pick(object, ['a', 'c']);
      * // => { 'a': 1, 'c': 3 }
      */
-    var pick = flatRest(function(object, props) {
-      return object == null ? {} : basePick(object, arrayMap(props, toKey));
+    var pick = flatRest(function(object, paths) {
+      return object == null ? {} : basePick(object, paths);
     });
 
     /**
@@ -45710,7 +45765,16 @@ return jQuery;
      * // => { 'a': 1, 'c': 3 }
      */
     function pickBy(object, predicate) {
-      return object == null ? {} : basePickBy(object, getAllKeysIn(object), getIteratee(predicate));
+      if (object == null) {
+        return {};
+      }
+      var props = arrayMap(getAllKeysIn(object), function(prop) {
+        return [prop];
+      });
+      predicate = getIteratee(predicate);
+      return basePickBy(object, props, function(value, path) {
+        return predicate(value, path[0]);
+      });
     }
 
     /**
@@ -45743,15 +45807,15 @@ return jQuery;
      * // => 'default'
      */
     function result(object, path, defaultValue) {
-      path = isKey(path, object) ? [path] : castPath(path);
+      path = castPath(path, object);
 
       var index = -1,
           length = path.length;
 
       // Ensure the loop is entered when path is empty.
       if (!length) {
-        object = undefined;
         length = 1;
+        object = undefined;
       }
       while (++index < length) {
         var value = object == null ? undefined : object[toKey(path[index])];
@@ -46777,7 +46841,10 @@ return jQuery;
      */
     function startsWith(string, target, position) {
       string = toString(string);
-      position = baseClamp(toInteger(position), 0, string.length);
+      position = position == null
+        ? 0
+        : baseClamp(toInteger(position), 0, string.length);
+
       target = baseToString(target);
       return string.slice(position, position + target.length) == target;
     }
@@ -46896,9 +46963,9 @@ return jQuery;
         options = undefined;
       }
       string = toString(string);
-      options = assignInWith({}, options, settings, assignInDefaults);
+      options = assignInWith({}, options, settings, customDefaultsAssignIn);
 
-      var imports = assignInWith({}, options.imports, settings.imports, assignInDefaults),
+      var imports = assignInWith({}, options.imports, settings.imports, customDefaultsAssignIn),
           importsKeys = keys(imports),
           importsValues = baseValues(imports, importsKeys);
 
@@ -47481,7 +47548,7 @@ return jQuery;
      * // => [{ 'a': 1, 'b': 2 }]
      */
     function conforms(source) {
-      return baseConforms(baseClone(source, true));
+      return baseConforms(baseClone(source, CLONE_DEEP_FLAG));
     }
 
     /**
@@ -47643,7 +47710,7 @@ return jQuery;
      * // => ['def']
      */
     function iteratee(func) {
-      return baseIteratee(typeof func == 'function' ? func : baseClone(func, true));
+      return baseIteratee(typeof func == 'function' ? func : baseClone(func, CLONE_DEEP_FLAG));
     }
 
     /**
@@ -47675,7 +47742,7 @@ return jQuery;
      * // => [{ 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matches(source) {
-      return baseMatches(baseClone(source, true));
+      return baseMatches(baseClone(source, CLONE_DEEP_FLAG));
     }
 
     /**
@@ -47705,7 +47772,7 @@ return jQuery;
      * // => { 'a': 4, 'b': 5, 'c': 6 }
      */
     function matchesProperty(path, srcValue) {
-      return baseMatchesProperty(path, baseClone(srcValue, true));
+      return baseMatchesProperty(path, baseClone(srcValue, CLONE_DEEP_FLAG));
     }
 
     /**
@@ -48261,7 +48328,7 @@ return jQuery;
       if (isArray(value)) {
         return arrayMap(value, toKey);
       }
-      return isSymbol(value) ? [value] : copyArray(stringToPath(value));
+      return isSymbol(value) ? [value] : copyArray(stringToPath(toString(value)));
     }
 
     /**
@@ -48982,14 +49049,13 @@ return jQuery;
     // Add `LazyWrapper` methods for `_.drop` and `_.take` variants.
     arrayEach(['drop', 'take'], function(methodName, index) {
       LazyWrapper.prototype[methodName] = function(n) {
-        var filtered = this.__filtered__;
-        if (filtered && !index) {
-          return new LazyWrapper(this);
-        }
         n = n === undefined ? 1 : nativeMax(toInteger(n), 0);
 
-        var result = this.clone();
-        if (filtered) {
+        var result = (this.__filtered__ && !index)
+          ? new LazyWrapper(this)
+          : this.clone();
+
+        if (result.__filtered__) {
           result.__takeCount__ = nativeMin(n, result.__takeCount__);
         } else {
           result.__views__.push({
@@ -49165,7 +49231,7 @@ return jQuery;
       }
     });
 
-    realNames[createHybrid(undefined, BIND_KEY_FLAG).name] = [{
+    realNames[createHybrid(undefined, WRAP_BIND_KEY_FLAG).name] = [{
       'name': 'wrapper',
       'func': undefined
     }];
@@ -50078,7 +50144,427 @@ module.exports = Component.exports
 /* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [(_vm.sliderDetail) ? _c('div', {
+    staticClass: "col-md-12 col-sm-12 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_vm._m(0), _vm._v(" "), (_vm.message) ? _c('div', {
+    staticClass: "alert alert-danger"
+  }, [_c('strong', [_vm._v("Danger!")]), _vm._v(" Please check the required field\n        ")]) : _vm._e(), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.newSlider
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link",
+    on: {
+      "click": _vm.fetchslider
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('br'), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal form-label-left",
+    attrs: {
+      "id": "demo-form2",
+      "data-parsley-validate": "",
+      "method": "post",
+      "enctype": "multipart/form-data"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.slider.slider_name),
+      expression: "slider.slider_name"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "slider_name",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.slider.slider_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.slider.slider_name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [(!_vm.image) ? _c('div', [_c('h2', [_vm._v("Select an image")]), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "file"
+    },
+    on: {
+      "change": _vm.onFileChange
+    }
+  })]) : _c('div', [_c('img', {
+    attrs: {
+      "src": _vm.image
+    }
+  }), _vm._v(" "), _c('button', {
+    on: {
+      "click": _vm.removeImage
+    }
+  }, [_vm._v("Remove image")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(3), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.slider.slider_type),
+      expression: "slider.slider_type"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.slider.slider_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "image"
+    }
+  }, [_vm._v("image")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "video"
+    }
+  }, [_vm._v("video")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(4), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.slider.slider_description),
+      expression: "slider.slider_description"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12 text-left",
+    attrs: {
+      "type": "text",
+      "id": "slider_desc",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.slider.slider_description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.slider.slider_description = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(5), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.slider.slider_active),
+      expression: "slider.slider_active"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.slider.slider_active = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Choose option")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "yes"
+    }
+  }, [_vm._v("Yes")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "no"
+    }
+  }, [_vm._v("No")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "ln_solid"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12 col-md-offset-3"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), (_vm.submit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnslider(0)
+      }
+    }
+  }, [_vm._v("Submit")]) : _vm._e(), _vm._v(" "), (_vm.edit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnslider(_vm.slider.slider_id)
+      }
+    }
+  }, [_vm._v("Edit")]) : _vm._e()])])])])])]) : _vm._e(), _vm._v(" "), (!_vm.sliderDetail) ? _c('div', {
+    staticClass: "col-md-12 col-sm-12 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_c('h2', [_vm._v("Slider Tables "), _c('small', [_vm._v("total slider  "), _c('span', [_vm._v(_vm._s(_vm.total))])])]), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_vm._m(6), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link",
+    on: {
+      "click": _vm.newSlider
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _vm._m(7)]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('div', {
+    staticClass: "input-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchQuery),
+      expression: "searchQuery"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "Search for...",
+      "autocomplete": "off"
+    },
+    domProps: {
+      "value": (_vm.searchQuery)
+    },
+    on: {
+      "keyup": _vm.search,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchQuery = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _vm._m(8)]), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_vm._m(9), _vm._v(" "), _c('tbody', [_vm._l((_vm.sliders), function(m, key) {
+    return _vm._t("default", [_c('tr', [_c('td', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [(m.slider_type == 'image') ? _vm._t("default", [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showModal(key)
+        }
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": _vm.slider_url + m.slider_link,
+        "height": "100px"
+      }
+    })])]) : _vm._e(), _vm._v(" "), (m.slider_type == 'video') ? _vm._t("default", [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showModal(key)
+        }
+      }
+    }, [_c('video', {
+      staticStyle: {
+        "margin-top": "-10px !important"
+      },
+      attrs: {
+        "height": "100",
+        "width": "100"
+      }
+    }, [_c('source', {
+      attrs: {
+        "src": _vm.slider_url + m.slider_link,
+        "type": "video/mp4"
+      }
+    })])])]) : _vm._e(), _vm._v(" "), (_vm.modal == key && _vm.modal != -1) ? _c('div', [_c('div', {
+      on: {
+        "click": function($event) {
+          _vm.modal = -1
+        }
+      }
+    }, [_c('div', [_c('hr'), _vm._v(" "), _c('div', {
+      staticClass: "modal-body1"
+    }, [(m.slider_type == 'video') ? _vm._t("default", [_c('video', {
+      attrs: {
+        "height": "240",
+        "width": "240",
+        "controls": ""
+      }
+    }, [_c('source', {
+      attrs: {
+        "src": _vm.slider_url + m.slider_link,
+        "type": "video/mp4"
+      }
+    }), _vm._v(" "), _vm._v("\n                                    Your browser does not support the video tag.\n                                ")])]) : _vm._e(), _vm._v(" "), (m.slider_type == 'image') ? _vm._t("default", [_c('img', {
+      staticClass: "img-responsive",
+      attrs: {
+        "src": _vm.slider_url + m.slider_link
+      }
+    })]) : _vm._e()], 2)])])]) : _vm._e()], 2), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditslider(key)
+        }
+      }
+    }, [_vm._v(_vm._s(m.slider_name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "width": "30%"
+      }
+    }, [_vm._v(_vm._s(m.slider_weight))]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Delete"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnDeleteslider(m.slider_id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-close"
+    })])])])])
+  })], 2)]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-12 text-center"
+  }, [_c('a', {
+    attrs: {
+      "href": "",
+      "onclick": "return false",
+      "name": "loadMore"
+    },
+    on: {
+      "click": function($event) {
+        _vm.loadMore('slider')
+      }
+    }
+  }, [_vm._v("Load More")])])])])]) : _vm._e()])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h2', [_vm._v("Slider "), _c('small', [_vm._v("form tool")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Title "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Image "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Type"), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Description "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Active"), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('a', {
+    staticClass: "collapse-link"
+  }, [_c('i', {
+    staticClass: "fa fa-"
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('a', {
+    staticClass: "close-link"
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button"
+    }
+  }, [_vm._v("Go!")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("slider")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Weight")])])])
+}]}
+module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -50090,7 +50576,381 @@ if (false) {
 /* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-6"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_vm._m(0), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.newUser
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('br'), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal form-label-left",
+    attrs: {
+      "id": "demo-form2",
+      "data-parsley-validate": "",
+      "method": "post"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.user.name),
+      expression: "user.name"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "name",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.user.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.user.name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(3), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.user.email),
+      expression: "user.email"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "email",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.user.email)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.user.email = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(4), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.user.user_type),
+      expression: "user.user_type"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "placeholer": "Choose option"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.user.user_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "0"
+    }
+  }, [_vm._v("User")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "1"
+    }
+  }, [_vm._v("Moderator")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "2"
+    }
+  }, [_vm._v("Admin")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(5), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.user.password),
+      expression: "user.password"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "password",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.user.password)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.user.password = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "ln_solid"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12 col-md-offset-3"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), (_vm.submit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnUser(0)
+      }
+    }
+  }, [_vm._v("Submit")]) : _vm._e(), _vm._v(" "), (_vm.edit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnUser(_vm.user.id)
+      }
+    }
+  }, [_vm._v("Edit")]) : _vm._e()])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_c('h2', [_vm._v("User Tables "), _c('small', [_vm._v("total users  "), _c('span', [_vm._v(_vm._s(_vm.total))])])]), _vm._v(" "), _vm._m(6), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('div', {
+    staticClass: "input-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchQuery),
+      expression: "searchQuery"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "Search for...",
+      "autocomplete": "off"
+    },
+    domProps: {
+      "value": (_vm.searchQuery)
+    },
+    on: {
+      "keyup": _vm.search,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchQuery = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _vm._m(7)]), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_vm._m(8), _vm._v(" "), _c('tbody', _vm._l((_vm.users), function(value, key) {
+    return _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditUser(key)
+        }
+      }
+    }, [_vm._v(_vm._s(key + 1))])]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditUser(key)
+        }
+      }
+    }, [_vm._v(_vm._s(value.name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "width": "30%"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditUser(key)
+        }
+      }
+    }, [_vm._v(_vm._s(value.user_type))])]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Delete"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnDeleteUser(value.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-close"
+    })])])])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-12 text-center"
+  }, [_c('a', {
+    attrs: {
+      "href": "",
+      "onclick": "return false",
+      "name": "loadMore"
+    },
+    on: {
+      "click": function($event) {
+        _vm.loadMore('category')
+      }
+    }
+  }, [_vm._v("Load More")])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h2', [_vm._v("User "), _c('small', [_vm._v("form tool")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('a', {
+    staticClass: "close-link"
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Name "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Email "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Type"), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Password "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link"
+  }, [_c('i', {
+    staticClass: "fa fa-"
+  })])]), _vm._v(" "), _c('li', {
+    staticClass: "dropdown"
+  }, [_c('a', {
+    staticClass: "dropdown-toggle",
+    attrs: {
+      "href": "#",
+      "data-toggle": "dropdown",
+      "role": "button",
+      "aria-expanded": "false"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-wrench"
+  })]), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu",
+    attrs: {
+      "role": "menu"
+    }
+  }, [_c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Settings 1")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Settings 2")])])])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link"
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button"
+    }
+  }, [_vm._v("Go!")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+}]}
+module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -50102,7 +50962,372 @@ if (false) {
 /* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-6"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_vm._m(0), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.newCustom
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('br'), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal form-label-left",
+    attrs: {
+      "id": "demo-form2",
+      "data-parsley-validate": "",
+      "method": "post"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.custom.custom_name),
+      expression: "custom.custom_name"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "name",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.custom.custom_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.custom.custom_name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(3), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.custom.custom_link),
+      expression: "custom.custom_link"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "email",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.custom.custom_link)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.custom.custom_link = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(4), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.custom.custom_blade),
+      expression: "custom.custom_blade"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "email",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.custom.custom_blade)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.custom.custom_blade = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(5), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.custom.custom_weight),
+      expression: "custom.custom_weight"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "password",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.custom.custom_weight)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.custom.custom_weight = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "ln_solid"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12 col-md-offset-3"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), (_vm.submit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnCustom(0)
+      }
+    }
+  }, [_vm._v("Submit")]) : _vm._e(), _vm._v(" "), (_vm.edit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnCustom(_vm.custom.custom_id)
+      }
+    }
+  }, [_vm._v("Edit")]) : _vm._e()])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_c('h2', [_vm._v("Custom Tables "), _c('small', [_vm._v("total customs  "), _c('span', [_vm._v(_vm._s(_vm.total))])])]), _vm._v(" "), _vm._m(6), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('div', {
+    staticClass: "input-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchQuery),
+      expression: "searchQuery"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "Search for...",
+      "autocomplete": "off"
+    },
+    domProps: {
+      "value": (_vm.searchQuery)
+    },
+    on: {
+      "keyup": _vm.search,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchQuery = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _vm._m(7)]), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_vm._m(8), _vm._v(" "), _c('tbody', _vm._l((_vm.customs), function(value, key) {
+    return _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditCustom(key)
+        }
+      }
+    }, [_vm._v(_vm._s(key + 1))])]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditCustom(key)
+        }
+      }
+    }, [_vm._v(_vm._s(value.custom_name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "width": "30%"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditCustom(key)
+        }
+      }
+    }, [_vm._v(_vm._s(value.custom_blade))])]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Delete"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnDeleteCustom(value.custom_id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-close"
+    })])])])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-12 text-center"
+  }, [_c('a', {
+    attrs: {
+      "href": "",
+      "onclick": "return false",
+      "name": "loadMore"
+    },
+    on: {
+      "click": function($event) {
+        _vm.loadMore('category')
+      }
+    }
+  }, [_vm._v("Load More")])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h2', [_vm._v("Custom "), _c('small', [_vm._v("form tool")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('a', {
+    staticClass: "close-link"
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Name "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Link "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Blade "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Weight "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link"
+  }, [_c('i', {
+    staticClass: "fa fa-"
+  })])]), _vm._v(" "), _c('li', {
+    staticClass: "dropdown"
+  }, [_c('a', {
+    staticClass: "dropdown-toggle",
+    attrs: {
+      "href": "#",
+      "data-toggle": "dropdown",
+      "role": "button",
+      "aria-expanded": "false"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-wrench"
+  })]), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu",
+    attrs: {
+      "role": "menu"
+    }
+  }, [_c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Settings 1")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Settings 2")])])])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link"
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button"
+    }
+  }, [_vm._v("Go!")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Blade")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+}]}
+module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -50143,7 +51368,758 @@ if (false) {
 /* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-4 col-sm-12 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_c('h2', [_vm._v("Page")]), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.storePage
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('div', {
+    staticClass: "x_content warp_box"
+  }, [_c('br'), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal",
+    attrs: {
+      "id": "demo-form2",
+      "data-parsley-validate": "",
+      "method": "post"
+    }
+  }, [_c('ul', {
+    staticClass: "list-unstyled"
+  }, _vm._l((_vm.pages), function(c) {
+    return _c('li', [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.selectedPage),
+        expression: "selectedPage"
+      }],
+      attrs: {
+        "type": "checkbox",
+        "number": ""
+      },
+      domProps: {
+        "value": c.id,
+        "checked": Array.isArray(_vm.selectedPage) ? _vm._i(_vm.selectedPage, c.id) > -1 : (_vm.selectedPage)
+      },
+      on: {
+        "__c": function($event) {
+          var $$a = _vm.selectedPage,
+            $$el = $event.target,
+            $$c = $$el.checked ? (true) : (false);
+          if (Array.isArray($$a)) {
+            var $$v = c.id,
+              $$i = _vm._i($$a, $$v);
+            if ($$c) {
+              $$i < 0 && (_vm.selectedPage = $$a.concat($$v))
+            } else {
+              $$i > -1 && (_vm.selectedPage = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            }
+          } else {
+            _vm.selectedPage = $$c
+          }
+        }
+      }
+    }), _vm._v("\n                " + _vm._s(c.title) + "\n              ")])
+  }))])])])]), _vm._v(" "), _c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_c('h2', [_vm._v("Post")]), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.storePost
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('div', {
+    staticClass: "x_content warp_box"
+  }, [_c('br'), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal",
+    attrs: {
+      "id": "demo-form2",
+      "data-parsley-validate": "",
+      "method": "post"
+    }
+  }, [_c('ul', {
+    staticClass: "list-unstyled"
+  }, _vm._l((_vm.posts), function(c) {
+    return _c('li', [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.selectedPost),
+        expression: "selectedPost"
+      }],
+      attrs: {
+        "type": "checkbox",
+        "number": ""
+      },
+      domProps: {
+        "value": c.id,
+        "checked": Array.isArray(_vm.selectedPost) ? _vm._i(_vm.selectedPost, c.id) > -1 : (_vm.selectedPost)
+      },
+      on: {
+        "__c": function($event) {
+          var $$a = _vm.selectedPost,
+            $$el = $event.target,
+            $$c = $$el.checked ? (true) : (false);
+          if (Array.isArray($$a)) {
+            var $$v = c.id,
+              $$i = _vm._i($$a, $$v);
+            if ($$c) {
+              $$i < 0 && (_vm.selectedPost = $$a.concat($$v))
+            } else {
+              $$i > -1 && (_vm.selectedPost = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            }
+          } else {
+            _vm.selectedPost = $$c
+          }
+        }
+      }
+    }), _vm._v("\n                " + _vm._s(c.title) + "\n              ")])
+  }))])])])])]), _vm._v(" "), (_vm.menuDetail == 1) ? _c('div', {
+    staticClass: "col-md-8 col-sm-12 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_vm._m(0), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.newMenu
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link",
+    on: {
+      "click": function($event) {
+        _vm.close - _vm.menu
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('br'), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal form-label-left",
+    attrs: {
+      "id": "demo-form2",
+      "data-parsley-validate": "",
+      "method": "post"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.menu.menu_name),
+      expression: "menu.menu_name"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "menu_name",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.menu.menu_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.menu.menu_name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.menu.menu_link),
+      expression: "menu.menu_link"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "menu_link",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.menu.menu_link)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.menu.menu_link = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Icon\n            ")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.menu.menu_icon),
+      expression: "menu.menu_icon"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "fa fa-cart-plus"
+    },
+    domProps: {
+      "value": (_vm.menu.menu_icon)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.menu.menu_icon = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _vm._m(3)])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "middle-name"
+    }
+  }, [_vm._v("Menu Type")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.menu.menu_type),
+      expression: "menu.menu_type"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.menu.menu_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "default"
+    }
+  }, [_vm._v("Choose Menu Type")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "custom"
+    }
+  }, [_vm._v("Custom")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "template"
+    }
+  }, [_vm._v("Template")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "middle-name"
+    }
+  }, [_vm._v("Parent")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.menu.parent_id),
+      expression: "menu.parent_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.menu.parent_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "1"
+    }
+  }, [_vm._v("Choose the parent menu")]), _vm._v(" "), _vm._l((_vm.menus), function(option) {
+    return _c('option', {
+      domProps: {
+        "value": option.menu_id
+      }
+    }, [_vm._v("\n                  " + _vm._s(option.menu_name) + "\n                ")])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(4), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.menu.menu_desc),
+      expression: "menu.menu_desc"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12 text-left",
+    attrs: {
+      "type": "text",
+      "id": "menu_desc",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.menu.menu_desc)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.menu.menu_desc = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "ln_solid"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12 col-md-offset-3"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), (_vm.submit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnMenu(0)
+      }
+    }
+  }, [_vm._v("Submit")]) : _vm._e(), _vm._v(" "), (_vm.edit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnMenu(_vm.menu.menu_id)
+      }
+    }
+  }, [_vm._v("Edit")]) : _vm._e()])])])])])]) : _vm._e(), _vm._v(" "), (_vm.menuDetail == 2) ? _c('div', {
+    staticClass: "col-md-8 col-sm-12 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_vm._m(5), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.newMenu
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link",
+    on: {
+      "click": _vm.closeMenu
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('br'), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal form-label-left",
+    attrs: {
+      "id": "demo-form2",
+      "data-parsley-validate": "",
+      "method": "post"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(6), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.menu.menu_name),
+      expression: "menu.menu_name"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "menu_name",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.menu.menu_name)
+    },
+    on: {
+      "keyup": _vm.menuPara,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.menu.menu_name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(7), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.menu.menu_link),
+      expression: "menu.menu_link"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "menu_link",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.menu.menu_link)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.menu.menu_link = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Icon\n            ")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.menu.menu_icon),
+      expression: "menu.menu_icon"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "fa fa-cart-plus"
+    },
+    domProps: {
+      "value": (_vm.menu.menu_icon)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.menu.menu_icon = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _vm._m(8)])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "middle-name"
+    }
+  }, [_vm._v("Parent")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.menu.parent_id),
+      expression: "menu.parent_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.menu.parent_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "1"
+    }
+  }, [_vm._v("Choose the parent menu")]), _vm._v(" "), _vm._l((_vm.menus), function(option) {
+    return _c('option', {
+      domProps: {
+        "value": option.menu_id
+      }
+    }, [_vm._v("\n                  " + _vm._s(option.menu_name) + "\n                ")])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(9), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.menu.menu_desc),
+      expression: "menu.menu_desc"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12 text-left",
+    attrs: {
+      "type": "text",
+      "id": "menu_desc",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.menu.menu_desc)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.menu.menu_desc = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "ln_solid"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12 col-md-offset-3"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), (_vm.edit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnMenu(_vm.menu.menu_id)
+      }
+    }
+  }, [_vm._v("Edit")]) : _vm._e()])])])])])]) : _vm._e(), _vm._v(" "), (_vm.menuDetail == 3) ? _c('div', {
+    staticClass: "col-md-8 col-sm-12 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_vm._m(10), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.newMenu
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link",
+    on: {
+      "click": _vm.closeMenu
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('table', {
+    staticClass: "table"
+  }, [_vm._m(11), _vm._v(" "), _c('tbody', _vm._l((_vm.menus), function(m, key) {
+    return _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditMenu(key, m.menu_type)
+        }
+      }
+    }, [_vm._v(_vm._s(key + 1))])]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditMenu(key, m.menu_type)
+        }
+      }
+    }, [_vm._v(_vm._s(m.menu_name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "width": "30%"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditMenu(key, m.menu_type)
+        }
+      }
+    }, [_vm._v(_vm._s(_vm._f("parentName")(m.parent_id)))])]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Delete"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnDeleteMenu(m.menu_id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-close"
+    })])])])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-12 text-center"
+  }, [_c('a', {
+    attrs: {
+      "href": "",
+      "onclick": "return false",
+      "name": "loadMore"
+    },
+    on: {
+      "click": function($event) {
+        _vm.loadMore('menu')
+      }
+    }
+  }, [_vm._v("Load More")])])])])]) : _vm._e()])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h2', [_vm._v("Menu "), _c('small', [_vm._v("form tool")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Name "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Custom Link"), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', {
+    staticClass: "help-block"
+  }, [_vm._v("Default not requied. "), _c('a', {
+    attrs: {
+      "href": "http://fontawesome.io/icons/"
+    }
+  }, [_vm._v("Sample")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Description "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h2', [_vm._v("Menu "), _c('small', [_vm._v("form tool")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Name "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Para "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', {
+    staticClass: "help-block"
+  }, [_vm._v("Default not requied. "), _c('a', {
+    attrs: {
+      "href": "http://fontawesome.io/icons/"
+    }
+  }, [_vm._v("Sample")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Description "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h2', [_vm._v("Menu Tables "), _c('small', [_vm._v("total menu ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Parent Name")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+}]}
+module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -50967,8 +52943,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "number": ""
       },
       domProps: {
-        "value": c.category_id,
-        "checked": Array.isArray(_vm.selected) ? _vm._i(_vm.selected, c.category_id) > -1 : (_vm.selected)
+        "value": c.tax_id,
+        "checked": Array.isArray(_vm.selected) ? _vm._i(_vm.selected, c.tax_id) > -1 : (_vm.selected)
       },
       on: {
         "__c": function($event) {
@@ -50976,7 +52952,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
             $$el = $event.target,
             $$c = $$el.checked ? (true) : (false);
           if (Array.isArray($$a)) {
-            var $$v = c.category_id,
+            var $$v = c.tax_id,
               $$i = _vm._i($$a, $$v);
             if ($$c) {
               $$i < 0 && (_vm.selected = $$a.concat($$v))
@@ -50988,7 +52964,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           }
         }
       }
-    }), _vm._v("\n                " + _vm._s(c.category_name) + "\n              ")])
+    }), _vm._v("\n                " + _vm._s(c.tax_name) + "\n              ")])
   }))])])]), _vm._v(" "), _c('div', {
     staticClass: "x_panel"
   }, [_c('div', {
@@ -51542,7 +53518,474 @@ if (false) {
 /* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [(_vm.mediaDetail) ? _c('div', {
+    staticClass: "col-md-12 col-sm-12 col-xs-12"
+  }, [_c('div', {
+    staticClass: "col-md-8 col-sm-12 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_vm._m(0), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.newMedia
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link",
+    on: {
+      "click": _vm.fetchMedia
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('br'), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal form-label-left",
+    attrs: {
+      "id": "demo-form2",
+      "data-parsley-validate": "",
+      "method": "post",
+      "enctype": "multipart/form-data"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [(!_vm.media.media_link) ? _c('div', [_c('h4', [_vm._v("Select an Media")]), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "file"
+    },
+    on: {
+      "change": _vm.onFileChange
+    }
+  })]) : _c('div', [_c('img', {
+    staticClass: "img-responsive",
+    attrs: {
+      "src": _vm.assets + _vm.media.media_link
+    }
+  }), _vm._v(" "), _c('button', {
+    on: {
+      "click": _vm.removeMedia
+    }
+  }, [_vm._v("Remove")])])])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4 col-sm-12 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_vm._m(2), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.newMedia
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link",
+    on: {
+      "click": _vm.fetchMedia
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('br'), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal form-label-left",
+    attrs: {
+      "id": "demo-form2",
+      "data-parsley-validate": "",
+      "method": "post",
+      "enctype": "multipart/form-data"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-12 col-sm-12 col-xs-12"
+  }, [_vm._m(3), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.media.media_name),
+      expression: "media.media_name"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "media_name",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.media.media_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.media.media_name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-12 col-sm-12 col-xs-12"
+  }, [_vm._m(4), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.media.media_type),
+      expression: "media.media_type"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.media.media_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "image"
+    }
+  }, [_vm._v("image")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "video"
+    }
+  }, [_vm._v("video")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-12 col-sm-12 col-xs-12"
+  }, [_vm._m(5), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.media.media_desc),
+      expression: "media.media_desc"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12 text-left",
+    attrs: {
+      "type": "text",
+      "id": "media_desc",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.media.media_desc)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.media.media_desc = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-12 col-sm-12 col-xs-12"
+  }, [_vm._m(6), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.media.media_active),
+      expression: "media.media_active"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.media.media_active = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Choose option")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "yes"
+    }
+  }, [_vm._v("Yes")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "no"
+    }
+  }, [_vm._v("No")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "ln_solid"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-12 col-sm-12 col-xs-12 col-md-offset-3"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), (_vm.submit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnMedia(0)
+      }
+    }
+  }, [_vm._v("Submit")]) : _vm._e(), _vm._v(" "), (_vm.edit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnMedia(_vm.media.media_id)
+      }
+    }
+  }, [_vm._v("Edit")]) : _vm._e()])])])])])])]) : _vm._e(), _vm._v(" "), (!_vm.mediaDetail) ? _c('div', {
+    staticClass: "col-md-12 col-sm-12 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_c('h2', [_vm._v("Media Tables "), _c('small', [_vm._v("total media  "), _c('span', [_vm._v(_vm._s(_vm.total))])])]), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_vm._m(7), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link",
+    on: {
+      "click": _vm.newMedia
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _vm._m(8)]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('div', {
+    staticClass: "input-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchQuery),
+      expression: "searchQuery"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "Search for...",
+      "autocomplete": "off"
+    },
+    domProps: {
+      "value": (_vm.searchQuery)
+    },
+    on: {
+      "keyup": _vm.search,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchQuery = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _vm._m(9)]), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_vm._m(10), _vm._v(" "), _c('tbody', [_vm._l((_vm.medias), function(m, key) {
+    return _vm._t("default", [_c('tr', [_c('td', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [(m.media_type == 'image') ? _vm._t("default", [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showModal(key)
+        }
+      }
+    }, [_c('img', {
+      attrs: {
+        "src": _vm.assets + m.media_link,
+        "height": "100px"
+      }
+    })])]) : _vm._e(), _vm._v(" "), (m.media_type == 'video') ? _vm._t("default", [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showModal(key)
+        }
+      }
+    }, [_c('video', {
+      staticStyle: {
+        "margin-top": "-10px !important"
+      },
+      attrs: {
+        "height": "100",
+        "width": "100"
+      }
+    }, [_c('source', {
+      attrs: {
+        "src": _vm.assets + m.media_link,
+        "type": "video/mp4"
+      }
+    })])])]) : _vm._e(), _vm._v(" "), (_vm.modal == key && _vm.modal != -1) ? _c('div', [_c('div', {
+      on: {
+        "click": function($event) {
+          _vm.modal = -1
+        }
+      }
+    }, [_c('div', [_c('hr'), _vm._v(" "), _c('div', {
+      staticClass: "modal-body1"
+    }, [(m.media_type == 'video') ? _vm._t("default", [_c('video', {
+      attrs: {
+        "height": "240",
+        "width": "240",
+        "controls": ""
+      }
+    }, [_c('source', {
+      attrs: {
+        "src": _vm.assets + m.media_link,
+        "type": "video/mp4"
+      }
+    }), _vm._v(" "), _vm._v("\n                                    Your browser does not support the video tag.\n                                ")])]) : _vm._e(), _vm._v(" "), (m.media_type == 'image') ? _vm._t("default", [_c('img', {
+      staticClass: "img-responsive",
+      attrs: {
+        "src": _vm.assets + m.media_link
+      }
+    })]) : _vm._e()], 2)])])]) : _vm._e()], 2), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditMedia(key)
+        }
+      }
+    }, [_vm._v(_vm._s(m.media_name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "width": "30%"
+      }
+    }, [_c('input', {
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "name": ""
+      },
+      domProps: {
+        "value": _vm.assets + m.media_link
+      }
+    })]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Delete"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnDeleteMedia(m.media_id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-close"
+    })])])])])
+  })], 2)]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-12 text-center"
+  }, [_c('a', {
+    attrs: {
+      "href": "",
+      "onclick": "return false",
+      "name": "loadMore"
+    },
+    on: {
+      "click": function($event) {
+        _vm.loadMore('media')
+      }
+    }
+  }, [_vm._v("Load More")])])])])]) : _vm._e()])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h2', [_vm._v("Media "), _c('small', [_vm._v("form tool")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Image "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h2', [_vm._v("Media "), _c('small', [_vm._v("form tool")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label"
+  }, [_vm._v("Title "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label"
+  }, [_vm._v("Type"), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label"
+  }, [_vm._v("Description "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label"
+  }, [_vm._v("Active"), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('a', {
+    staticClass: "collapse-link"
+  }, [_c('i', {
+    staticClass: "fa fa-"
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('a', {
+    staticClass: "close-link"
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button"
+    }
+  }, [_vm._v("Go!")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Media")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Link")])])])
+}]}
+module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -51762,7 +54205,455 @@ if (false) {
 /* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-6"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_vm._m(0), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.newTaxonomy
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('br'), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal form-label-left",
+    attrs: {
+      "id": "demo-form2",
+      "data-parsley-validate": "",
+      "method": "post"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.tax_name),
+      expression: "taxonomy.tax_name"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "tax_name",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.taxonomy.tax_name)
+    },
+    on: {
+      "keyup": _vm.taxonomyPara,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.taxonomy.tax_name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(3), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.tax_link),
+      expression: "taxonomy.tax_link"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "tax_link",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.taxonomy.tax_link)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.taxonomy.tax_link = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(4), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.tax_desc),
+      expression: "taxonomy.tax_desc"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12 text-left",
+    attrs: {
+      "type": "text",
+      "id": "tax_desc",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.taxonomy.tax_desc)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.taxonomy.tax_desc = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "last-name"
+    }
+  }, [_vm._v("Icon\n            ")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.tax_icon),
+      expression: "taxonomy.tax_icon"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "fa fa-cart-plus"
+    },
+    domProps: {
+      "value": (_vm.taxonomy.tax_icon)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.taxonomy.tax_icon = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _vm._m(5)])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "middle-name"
+    }
+  }, [_vm._v("Parent Name")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.parent_id),
+      expression: "taxonomy.parent_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.taxonomy.parent_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "0"
+    }
+  }, [_vm._v("Choose the taxonomy")]), _vm._v(" "), _vm._l((_vm.allTaxonomy), function(option) {
+    return _c('option', {
+      domProps: {
+        "value": option.tax_id
+      }
+    }, [_vm._v("\n                  " + _vm._s(option.tax_name) + "\n                ")])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(6), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.tax_active),
+      expression: "taxonomy.tax_active"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.taxonomy.tax_active = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Choose option")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "yes"
+    }
+  }, [_vm._v("Yes")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "no"
+    }
+  }, [_vm._v("No")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "ln_solid"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12 col-md-offset-3"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), (_vm.submit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnTaxonomy(0)
+      }
+    }
+  }, [_vm._v("Submit")]) : _vm._e(), _vm._v(" "), (_vm.edit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnTaxonomy(_vm.taxonomy.tax_id)
+      }
+    }
+  }, [_vm._v("Edit")]) : _vm._e()])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_c('h2', [_vm._v("Category Tables "), _c('small', [_vm._v("total categories  "), _c('span', [_vm._v(_vm._s(_vm.total))])])]), _vm._v(" "), _vm._m(7), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('div', {
+    staticClass: "input-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchQuery),
+      expression: "searchQuery"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "Search for...",
+      "autocomplete": "off"
+    },
+    domProps: {
+      "value": (_vm.searchQuery)
+    },
+    on: {
+      "keyup": _vm.search,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchQuery = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _vm._m(8)]), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_vm._m(9), _vm._v(" "), _c('tbody', _vm._l((_vm.taxonomies), function(cat, key) {
+    return _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditTaxonomy(key)
+        }
+      }
+    }, [_vm._v(_vm._s(key + 1))])]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditTaxonomy(key)
+        }
+      }
+    }, [_vm._v(_vm._s(cat.tax_name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "width": "30%"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditTaxonomy(key)
+        }
+      }
+    }, [_vm._v(_vm._s(_vm._f("parentName")(cat.parent_id)))])]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Delete"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnDeleteTaxonomy(cat.tax_id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-close"
+    })])])])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-12 text-center"
+  }, [_c('a', {
+    attrs: {
+      "href": "",
+      "onclick": "return false",
+      "name": "loadMore"
+    },
+    on: {
+      "click": function($event) {
+        _vm.loadMore('taxonomy')
+      }
+    }
+  }, [_vm._v("Load More")])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h2', [_vm._v("Category "), _c('small', [_vm._v("form tool")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('a', {
+    staticClass: "close-link"
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Name "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Para "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Description "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', {
+    staticClass: "help-block"
+  }, [_vm._v("Default not requied. "), _c('a', {
+    attrs: {
+      "href": "http://fontawesome.io/icons/"
+    }
+  }, [_vm._v("Sample")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Active"), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link"
+  }, [_c('i', {
+    staticClass: "fa fa-"
+  })])]), _vm._v(" "), _c('li', {
+    staticClass: "dropdown"
+  }, [_c('a', {
+    staticClass: "dropdown-toggle",
+    attrs: {
+      "href": "#",
+      "data-toggle": "dropdown",
+      "role": "button",
+      "aria-expanded": "false"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-wrench"
+  })]), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu",
+    attrs: {
+      "role": "menu"
+    }
+  }, [_c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Settings 1")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Settings 2")])])])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link"
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button"
+    }
+  }, [_vm._v("Go!")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Parent Name")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+}]}
+module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -51774,7 +54665,455 @@ if (false) {
 /* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-6"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_vm._m(0), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link",
+    attrs: {
+      "href": "javascript:void(0)"
+    },
+    on: {
+      "click": _vm.newTaxonomy
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('br'), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal form-label-left",
+    attrs: {
+      "id": "demo-form2",
+      "data-parsley-validate": "",
+      "method": "post"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.tax_name),
+      expression: "taxonomy.tax_name"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "tax_name",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.taxonomy.tax_name)
+    },
+    on: {
+      "keyup": _vm.taxonomyPara,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.taxonomy.tax_name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(3), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.tax_link),
+      expression: "taxonomy.tax_link"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12",
+    attrs: {
+      "type": "text",
+      "id": "tax_link",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.taxonomy.tax_link)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.taxonomy.tax_link = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(4), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.tax_desc),
+      expression: "taxonomy.tax_desc"
+    }],
+    staticClass: "form-control col-md-7 col-xs-12 text-left",
+    attrs: {
+      "type": "text",
+      "id": "tax_desc",
+      "required": "required"
+    },
+    domProps: {
+      "value": (_vm.taxonomy.tax_desc)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.taxonomy.tax_desc = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "last-name"
+    }
+  }, [_vm._v("Icon\n            ")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.tax_icon),
+      expression: "taxonomy.tax_icon"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "fa fa-cart-plus"
+    },
+    domProps: {
+      "value": (_vm.taxonomy.tax_icon)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.taxonomy.tax_icon = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _vm._m(5)])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "middle-name"
+    }
+  }, [_vm._v("Parent Name")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.parent_id),
+      expression: "taxonomy.parent_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.taxonomy.parent_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "0"
+    }
+  }, [_vm._v("Choose the taxonomy")]), _vm._v(" "), _vm._l((_vm.allTaxonomy), function(option) {
+    return _c('option', {
+      domProps: {
+        "value": option.tax_id
+      }
+    }, [_vm._v("\n                  " + _vm._s(option.tax_name) + "\n                ")])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_vm._m(6), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.taxonomy.tax_active),
+      expression: "taxonomy.tax_active"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.taxonomy.tax_active = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Choose option")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "yes"
+    }
+  }, [_vm._v("Yes")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "no"
+    }
+  }, [_vm._v("No")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "ln_solid"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12 col-md-offset-3"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), (_vm.submit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnTaxonomy(0)
+      }
+    }
+  }, [_vm._v("Submit")]) : _vm._e(), _vm._v(" "), (_vm.edit) ? _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit",
+      "onclick": "return false"
+    },
+    on: {
+      "click": function($event) {
+        _vm.btnTaxonomy(_vm.taxonomy.tax_id)
+      }
+    }
+  }, [_vm._v("Edit")]) : _vm._e()])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 col-sm-6 col-xs-12"
+  }, [_c('div', {
+    staticClass: "x_panel"
+  }, [_c('div', {
+    staticClass: "x_title"
+  }, [_c('h2', [_vm._v("Taxonomy Tables "), _c('small', [_vm._v("total taxonomies  "), _c('span', [_vm._v(_vm._s(_vm.total))])])]), _vm._v(" "), _vm._m(7), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "x_content"
+  }, [_c('div', {
+    staticClass: "input-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchQuery),
+      expression: "searchQuery"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "Search for...",
+      "autocomplete": "off"
+    },
+    domProps: {
+      "value": (_vm.searchQuery)
+    },
+    on: {
+      "keyup": _vm.search,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchQuery = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _vm._m(8)]), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_vm._m(9), _vm._v(" "), _c('tbody', _vm._l((_vm.taxonomies), function(cat, key) {
+    return _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditTaxonomy(key)
+        }
+      }
+    }, [_vm._v(_vm._s(key + 1))])]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditTaxonomy(key)
+        }
+      }
+    }, [_vm._v(_vm._s(cat.tax_name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "width": "30%"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Edit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnEditTaxonomy(key)
+        }
+      }
+    }, [_vm._v(_vm._s(_vm._f("parentName")(cat.parent_id)))])]), _vm._v(" "), _c('td', [_c('a', {
+      attrs: {
+        "href": "javascript:void(0)",
+        "name": "Delete"
+      },
+      on: {
+        "click": function($event) {
+          _vm.btnDeleteTaxonomy(cat.tax_id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-close"
+    })])])])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-12 text-center"
+  }, [_c('a', {
+    attrs: {
+      "href": "",
+      "onclick": "return false",
+      "name": "loadMore"
+    },
+    on: {
+      "click": function($event) {
+        _vm.loadMore('taxonomy')
+      }
+    }
+  }, [_vm._v("Load More")])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h2', [_vm._v("Taxonomy "), _c('small', [_vm._v("form tool")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('a', {
+    staticClass: "close-link"
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Name "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Para "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12",
+    attrs: {
+      "for": "first-name"
+    }
+  }, [_vm._v("Description "), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', {
+    staticClass: "help-block"
+  }, [_vm._v("Default not requied. "), _c('a', {
+    attrs: {
+      "href": "http://fontawesome.io/icons/"
+    }
+  }, [_vm._v("Sample")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('label', {
+    staticClass: "control-label col-md-3 col-sm-3 col-xs-12"
+  }, [_vm._v("Active"), _c('span', {
+    staticClass: "required"
+  }, [_vm._v("*")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    staticClass: "nav navbar-right panel_toolbox"
+  }, [_c('li', [_c('a', {
+    staticClass: "collapse-link"
+  }, [_c('i', {
+    staticClass: "fa fa-"
+  })])]), _vm._v(" "), _c('li', {
+    staticClass: "dropdown"
+  }, [_c('a', {
+    staticClass: "dropdown-toggle",
+    attrs: {
+      "href": "#",
+      "data-toggle": "dropdown",
+      "role": "button",
+      "aria-expanded": "false"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-wrench"
+  })]), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu",
+    attrs: {
+      "role": "menu"
+    }
+  }, [_c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Settings 1")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Settings 2")])])])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "close-link"
+  }, [_c('i', {
+    staticClass: "fa fa-close"
+  })])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button"
+    }
+  }, [_vm._v("Go!")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Parent Name")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+}]}
+module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {

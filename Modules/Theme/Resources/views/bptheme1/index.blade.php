@@ -34,18 +34,40 @@
 </section>
 
 	<div class="container">
-		@foreach (bp_post(9) as $post)
-     		<div class="col-md-4">
-      			<a href="{{url('/'.$post->post_link) }}" name="" class="col-md-12"><h4>{{ $post->title }}</h4></a>
-      			<span class="col-md-6">{{ $post->creator->name}}</span>
-      			<span class="col-md-6 text-right">{{ $post->created_at->diffForHumans() }}</span>
-      			@if($post->featured_img != '')
-      				{{-- <img src="{{ url('/public/uploads/'.$post->featured_img)}}" class="img-responsive" /> --}}
-      			@else
-    			<p class="col-md-12">{{  $post->body }}</p>
-    			@endif
-      		</div>
-    	@endforeach
+		<div class="col-md-8">
+			@foreach (bp_post(9) as $post)
+	     		<div class="col-md-12">
+	      			<a href="{{url('/'.$post->post_link) }}" name="" class="col-md-12"><h4>{{ $post->title }}</h4></a>
+	      			<span class="col-md-6"><i>Posted by {{ $post->creator->name}}</i></span>
+	      			<span class="col-md-6 text-right">{{ $post->created_at->diffForHumans() }}</span>
+	      			@if($post->featured_img != '')
+	      				{{-- <img src="{{ url('/public/uploads/'.$post->featured_img)}}" class="img-responsive" /> --}}
+	      			@else
+	    			<p class="col-md-12">{{  $post->body }}</p>
+	    			@endif
+	      		</div>
+	    	@endforeach
+    	</div>
+    	<div class="col-md-4" style="border:1px solid #e2e2e2; padding:30px;">
+    		<form>
+    			<h3>Login Form</h3>
+    			<hr>
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">Email address</label>
+				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Password</label>
+				    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				  </div>
+				  <div class="checkbox">
+				    <label>
+				      <input type="checkbox"> Check me out
+				    </label>
+				  </div>
+				  <button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+    	</div>
     </div>
 
 

@@ -10,7 +10,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.6.4",
-        "beyondplus/cmslibrary": "2.2.2"
+        "beyondplus/cmslibrary": "2.3.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

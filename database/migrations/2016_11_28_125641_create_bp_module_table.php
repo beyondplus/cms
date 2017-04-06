@@ -20,7 +20,7 @@ class CreateBpModuleTable extends Migration
             $table->integer('module_weight')->default(1);
             $table->string('module_icon');
             $table->integer('parent_id')->default(1);
-            $table->integer('staff_id')->default(0);
+            $table->integer('staff_id')->default(1);
             $table->integer('section')->default(0);
             $table->string('group_access',100);
             $table->timestamps();

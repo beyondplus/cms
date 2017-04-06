@@ -18,9 +18,9 @@
     <!-- iCheck -->
     <!-- <link href="{{ url('node_modules/gentelella/vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet"> -->
     <!-- bootstrap-progressbar -->
-    <link href="{{ url('node_modules/gentelella/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+    {{-- <link href="{{ url('node_modules/gentelella/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet"> --}}
     <!-- jVectorMap -->
-    <link href="{{ url('node_modules/gentelella/production/css/maps/jquery-jvectormap-2.0.3.css') }}" rel="stylesheet"/>
+   {{--  <link href="{{ url('node_modules/gentelella/production/css/maps/jquery-jvectormap-2.0.3.css') }}" rel="stylesheet"/> --}}
 
     <!-- Custom Theme Style -->
     <link href="{{ url('node_modules/gentelella/build/css/custom.min.css') }}" rel="stylesheet">

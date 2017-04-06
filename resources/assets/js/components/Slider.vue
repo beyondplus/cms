@@ -95,7 +95,6 @@
             </li>
             <li><a class="close-link"><i class="fa fa-close"></i></a>
             </li>
-            <li>
           </ul>
           <div class="clearfix"></div>
         </div>

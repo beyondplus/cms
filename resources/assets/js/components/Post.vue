@@ -97,8 +97,8 @@
           <form id="demo-form2" data-parsley-validate class="form-horizontal" method="post">
             <ul  class="list-unstyled">
               <li v-for="c in allCategory">
-                <input type="checkbox" v-model="selected" :value="c.category_id" number>
-                {{ c.category_name }}
+                <input type="checkbox" v-model="selected" :value="c.tax_id" number>
+                {{ c.tax_name }}
               </li>
             </ul>
           </form>
@@ -192,7 +192,7 @@ export default {
           segUrl : '',
           selected: [],
           searchQuery: '',
-          allCategory: [{category_name:'', category_id:''}],
+          allCategory: [{tax_name:'', tax_id:''}],
           posts: [{ id: 0,
                   title: "",
                   body: "",

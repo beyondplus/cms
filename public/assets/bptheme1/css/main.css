@@ -526,3 +526,7 @@ Main Components
 .lang-dropdown:hover .lang-dropdown-content {
     display: block;
 }
+
+.container {
+  padding: 10px;
+}
