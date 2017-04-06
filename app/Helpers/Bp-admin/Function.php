@@ -17,7 +17,7 @@ function custom()
 
 function bp_cat()
 {
-	$query = bp_category::get();
+	$query = bp_tax::where('tax_type','category')->get();
 	return $query;
 }
 

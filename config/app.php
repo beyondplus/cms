@@ -229,7 +229,7 @@ return [
         'Module' => Nwidart\Modules\Facades\Module::class,
 
         'bp_post' => BeyondPlus\CmsLibrary\Models\Bp_post::class,
-        'bp_category' => BeyondPlus\CmsLibrary\Models\Bp_category::class,
+        'bp_tax' => BeyondPlus\CmsLibrary\Models\Bp_tax::class,
         'bp_menu' => BeyondPlus\CmsLibrary\Models\Bp_menu::class,
         'bp_relationship' => BeyondPlus\CmsLibrary\Models\Bp_relationship::class,
         'bp_slider' => BeyondPlus\CmsLibrary\Models\Bp_slider::class,

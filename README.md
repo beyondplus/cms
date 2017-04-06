@@ -46,7 +46,7 @@ Beyond Plus CMS is the modular based Content Management System. It support to cr
 
 ## Global Models
 * use bp_post
-* use bp_category
+* use bp_tax
 * use bp_menu
 * use bp_relationship
 * use bp_slider
