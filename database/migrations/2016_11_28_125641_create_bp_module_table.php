@@ -13,7 +13,7 @@ class CreateBpModuleTable extends Migration
      */
     public function up()
     {
-        Schema::create('bp_module', function (Blueprint $table) {
+        Schema::create('bp_modules', function (Blueprint $table) {
             $table->increments('module_id');
             $table->string('module_name');
             $table->string('module_link');
@@ -34,6 +34,6 @@ class CreateBpModuleTable extends Migration
      */
     public function down()
     {
-        Schema::drop('bp_module');
+        Schema::drop('bp_modules');
     }
 }

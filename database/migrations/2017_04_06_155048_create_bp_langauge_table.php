@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBpRelationshipTable extends Migration
+class CreateBpLangaugeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +13,10 @@ class CreateBpRelationshipTable extends Migration
      */
     public function up()
     {
-        Schema::create('bp_relationships', function (Blueprint $table) {
-            $table->increments('id');
-            $table->text('term_id');
-            $table->string('post_id');
-            $table->string('type');
+         Schema::create('bp_languages', function (Blueprint $table) {
+            $table->increments('language_id');
+            $table->string('language_iso');
+            $table->string('language_value');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateBpRelationshipTable extends Migration
      */
     public function down()
     {
-        Schema::drop('bp_relationships');
+        Schema::drop('bp_languages');
     }
 }

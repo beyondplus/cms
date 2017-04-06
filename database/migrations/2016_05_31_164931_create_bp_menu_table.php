@@ -12,7 +12,7 @@ class CreateBpMenuTable extends Migration
      */
     public function up()
     {
-        Schema::create('bp_menu', function (Blueprint $table) {
+        Schema::create('bp_menus', function (Blueprint $table) {
             $table->increments('menu_id');
             $table->string('menu_name');
 			$table->string('menu_link')->default('');
@@ -34,6 +34,6 @@ class CreateBpMenuTable extends Migration
      */
     public function down()
     {
-        Schema::drop('bp_menu');
+        Schema::drop('bp_menus');
     }
 }

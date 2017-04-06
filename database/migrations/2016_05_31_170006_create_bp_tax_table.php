@@ -12,7 +12,7 @@ class CreateBpTaxTable extends Migration
      */
     public function up()
     {
-        Schema::create('bp_tax', function (Blueprint $table) {
+        Schema::create('bp_taxes', function (Blueprint $table) {
             $table->increments('tax_id');
             $table->string('parent_id');
             $table->string('tax_name');
@@ -34,6 +34,6 @@ class CreateBpTaxTable extends Migration
      */
     public function down()
     {
-        Schema::drop('bp_tax');
+        Schema::drop('bp_taxes');
     }
 }

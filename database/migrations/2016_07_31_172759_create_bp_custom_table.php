@@ -12,7 +12,7 @@ class CreateBpCustomTable extends Migration
      */
     public function up()
     {
-        Schema::create('bp_custom', function (Blueprint $table) {
+        Schema::create('bp_customs', function (Blueprint $table) {
             $table->increments('custom_id');
             $table->string('custom_name');
             $table->string('custom_link');
@@ -32,6 +32,6 @@ class CreateBpCustomTable extends Migration
      */
     public function down()
     {
-        Schema::drop('bp_custom');
+        Schema::drop('bp_customs');
     }
 }

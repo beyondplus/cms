@@ -12,7 +12,7 @@ class CreateBpCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('bp_category', function (Blueprint $table) {
+        Schema::create('bp_categories', function (Blueprint $table) {
             $table->increments('category_id');
             $table->string('category_name');
             $table->string('category_name_mm')->default('');
@@ -36,6 +36,6 @@ class CreateBpCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::drop('bp_category');
+        Schema::drop('bp_categories');
     }
 }

@@ -235,7 +235,7 @@ return [
         'bp_slider' => BeyondPlus\CmsLibrary\Models\Bp_slider::class,
         'bp_module' => BeyondPlus\CmsLibrary\Models\Bp_module::class,
         'bp_custom' => BeyondPlus\CmsLibrary\Models\Bp_custom::class,
-
+        'bp_messages' => BeyondPlus\CmsLibrary\Models\Bp_messages::class,
     ],
 
 ];

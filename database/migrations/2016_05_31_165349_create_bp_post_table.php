@@ -12,7 +12,7 @@ class CreateBpPostTable extends Migration
      */
     public function up()
     {
-        Schema::create('bp_post', function (Blueprint $table) {
+        Schema::create('bp_posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->text('body');
@@ -37,6 +37,6 @@ class CreateBpPostTable extends Migration
      */
     public function down()
     {
-        Schema::drop('bp_post');
+        Schema::drop('bp_posts');
     }
 }

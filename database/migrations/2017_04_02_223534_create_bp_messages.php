@@ -18,8 +18,8 @@ class CreateBpMessages extends Migration
             $table->integer('post_id');
             $table->text('message_value');
             $table->string('message_active', 3);
-            $table->string('message_type', 3);
-            $table->integer('user_id');
+            $table->string('message_type', 7);
+            $table->integer('user_id')->default(0);
             $table->timestamps();
         });
     }
