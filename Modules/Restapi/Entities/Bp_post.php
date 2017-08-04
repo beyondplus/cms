@@ -27,7 +27,7 @@ class Bp_post extends Model
 
     public function categories()
     {
-        return $this->belongsToMany('Modules\Restapi\Entities\Bp_term', 'bp_relationships' ,'post_id', 'term_id');
+        return $this->belongsToMany('Modules\Restapi\Entities\Bp_tax', 'bp_relationships' ,'post_id', 'tax_id');
     }
 
 
