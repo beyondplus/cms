@@ -81,7 +81,7 @@ class FrontController extends Controller
 
     public function cat($name){
         $bp_cat=Bp_tax::where('tax_type','category')->get();
-        $cat_id=Bp_tax::select('tax_id')->where('tax_type','category')->where('category_link',$name)->get()->first();
+        $cat_id=Bp_tax::select('tax_id')->where('tax_type','category')->where('tax_link',$name)->get()->first();
         if($cat_id === null){
             abort(404);
         } else {
