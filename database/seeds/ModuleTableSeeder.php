@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use BeyondPlus\CmsLibrary\Models\Bp_module;
+use Modules\Core\Entities\Bp_module;
 
 class ModuleTableSeeder extends Seeder
 {

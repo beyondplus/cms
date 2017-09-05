@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use BeyondPlus\CmsLibrary\Models\Bp_menu;
+use Modules\Core\Entities\Bp_menu;
 
 class MenuTableSeeder extends Seeder
 {

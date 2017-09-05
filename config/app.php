@@ -162,13 +162,12 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        BeyondPlus\CmsLibrary\CMSServiceProvider::class,
         Nwidart\Modules\LaravelModulesServiceProvider::class,
 
         /*
          * Package Service Providers...
          */
-        Laravel\Tinker\TinkerServiceProvider::class,
+        // Laravel\Tinker\TinkerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -228,14 +227,14 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Module' => Nwidart\Modules\Facades\Module::class,
 
-        'bp_post' => BeyondPlus\CmsLibrary\Models\Bp_post::class,
-        'bp_tax' => BeyondPlus\CmsLibrary\Models\Bp_tax::class,
-        'bp_menu' => BeyondPlus\CmsLibrary\Models\Bp_menu::class,
-        'bp_relationship' => BeyondPlus\CmsLibrary\Models\Bp_relationship::class,
-        'bp_slider' => BeyondPlus\CmsLibrary\Models\Bp_slider::class,
-        'bp_module' => BeyondPlus\CmsLibrary\Models\Bp_module::class,
-        'bp_custom' => BeyondPlus\CmsLibrary\Models\Bp_custom::class,
-        'bp_messages' => BeyondPlus\CmsLibrary\Models\Bp_messages::class,
+        'bp_post' => Modules\Core\Entities\Bp_post::class,
+        'bp_tax' => Modules\Core\Entities\Bp_tax::class,
+        'bp_menu' => Modules\Core\Entities\Bp_menu::class,
+        'bp_relationship' => Modules\Core\Entities\Bp_relationship::class,
+        'bp_slider' => Modules\Core\Entities\Bp_slider::class,
+        'bp_module' => Modules\Core\Entities\Bp_module::class,
+        'bp_custom' => Modules\Core\Entities\Bp_custom::class,
+        'bp_messages' => Modules\Core\Entities\Bp_messages::class,
     ],
 
 ];

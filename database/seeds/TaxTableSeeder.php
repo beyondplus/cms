@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use ILLuminate\Database\Eloquent\Model;
-use BeyondPlus\CmsLibrary\Models\Bp_tax;
+use Modules\Core\Entities\Bp_tax;
 
 class TaxTableSeeder extends Seeder
 {

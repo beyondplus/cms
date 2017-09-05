@@ -60,6 +60,7 @@ Beyond Plus CMS is the modular based Content Management System. It support to cr
 * Bootstrap CSS Framework
 * Gentelella ( CSS Admin Panel )
 * font-awesome
+* nwidart/laravel-modules
 
 ## Tutorial Screen Cast
 Later We will provide tutorial Screen Cast
@@ -87,11 +88,8 @@ The Beyond Plus CMS is open-sourced software licensed under the [MIT license](ht
 [https://youtu.be/aaFk7pHwBlk](https://youtu.be/aaFk7pHwBlk)
 
 ## Donate the Beer
-
+* Myanmar Bank Accounts
 * CB Bank Account No  : 0010600500612014
 * KBZ Bank Account No : 99930799902832301
 
-## Donate with Paypal
-
-[Paypal Account](http://PayPal.Me/kothu/1)
 
