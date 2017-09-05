@@ -79,8 +79,3 @@ The Beyond Plus CMS is open-sourced software licensed under the [MIT license](ht
 ## Youtube Video
 
 [https://www.youtube.com/watch?v=WV9rfMdqmh0](https://www.youtube.com/watch?v=WV9rfMdqmh0)
-
-## Donate the Beer
-
-* CB Bank Account No  : 0010600500612014
-* KBZ Bank Account No : 99930799902832301

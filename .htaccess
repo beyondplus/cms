@@ -3,6 +3,11 @@
         Options -MultiViews
     </IfModule>
 
+    <Files .env>
+        Order allow,deny
+        Deny from all
+    </Files>
+
     RewriteEngine On
  #   RewriteBase /cms
 
@@ -23,8 +28,3 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
-
-<Files .env>
-    Order Allow,Deny
-    Deny from all
-</Files>

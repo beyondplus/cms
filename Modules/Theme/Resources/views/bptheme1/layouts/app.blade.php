@@ -26,9 +26,8 @@
 
 
     <!-- REQUIRED JS SCRIPTS -->
-    <script src="{{ asset("/public/assets/bptheme1/js/app.js") }}"></script>
 
-    <script src="{{ asset("/public/assets/bptheme1/js/main.js") }}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" async></script>
 
     @stack('scripts')
     

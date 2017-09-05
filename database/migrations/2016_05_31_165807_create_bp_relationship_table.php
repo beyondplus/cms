@@ -14,7 +14,7 @@ class CreateBpRelationshipTable extends Migration
     {
         Schema::create('bp_relationships', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('term_id');
+            $table->text('tax_id');
             $table->string('post_id');
             $table->string('type');
             $table->timestamps();
