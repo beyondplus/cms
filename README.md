@@ -24,7 +24,7 @@ Beyond Plus CMS is the modular based Content Management System. It support to cr
 * php artisan optimize
 
 ## Usage
-* siteurl.com/bp-admin/login
+* siteurl.com/login
 
 ## Themes
 * Modules/Theme/Resources/views
