@@ -15,6 +15,8 @@ class Bp_post extends Model
 
     ];
 
+    protected $hidden = ['post_type','post_weight','post_view','post_active', 'featured','lang','post_template','staff_id','created_at','updated_at'];
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'staff_id');

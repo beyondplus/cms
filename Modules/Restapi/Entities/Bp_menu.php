@@ -13,6 +13,8 @@ class Bp_menu extends Model
     	 'menu_name','menu_link','post_id','menu_weight','menu_icon','parent_id' ,'menu_type','lang','staff_id','created_at','updated_at'
     ];
 
+    protected $hidden = ['post_id','menu_weight','menu_type','staff_id', 'lang','created_at','updated_at'];
+
     public function setMenulinkAttribute($value){
         $this->attributes['menu_link'] = str_replace(' ', '-', strtolower($value));
     }

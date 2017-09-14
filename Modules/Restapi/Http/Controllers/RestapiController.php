@@ -19,7 +19,7 @@ class RestapiController extends Controller
     {
         $per_page = $request->input('per_page');
         isset($per_page)? : $per_page = 10;
-        return bp_post::with('categories')->limit($per_page)->get();
+        return bp_post::limit($per_page)->get();
     }
 
     /**
