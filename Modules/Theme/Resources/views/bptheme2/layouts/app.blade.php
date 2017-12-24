@@ -17,7 +17,7 @@
 
     <!-- Header -->
 
-    @include('theme.bptheme2.layouts.header')
+    @include('theme::bptheme2.layouts.header')
 
     <!-- Sidebar -->
    <!-- @1include('layouts/bptheme2/slider')  -->
@@ -25,7 +25,7 @@
     @yield('content')
 
     <!-- Footer -->
-    @include('theme.bptheme2.layouts.footer')
+    @include('theme::bptheme2.layouts.footer')
 
 
     <!-- REQUIRED JS SCRIPTS -->
